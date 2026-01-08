@@ -1,0 +1,675 @@
+import React from 'react';
+import { 
+  ArrowRightLeft, 
+  TrendingUp, 
+  Users, 
+  Building2, 
+  Trees, 
+  Repeat, 
+  ShieldCheck, 
+  Rocket,
+  HeartHandshake,
+  ArrowDownCircle,
+  Lightbulb,
+  MapPin,
+  Coins,
+  Scale,
+  Settings,
+  Globe,
+  RotateCw,
+  Search,
+  Hammer,
+  ArrowUpRight,
+  Anchor,
+  Shield,
+  Layers,
+  Network,
+  Database,
+  Activity,
+  Workflow,
+  Zap,
+  Cpu,
+  RefreshCcw,
+  Maximize
+} from 'lucide-react';
+
+const App = () => {
+  return (
+    <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans text-slate-800">
+      {/* Header */}
+      <header className="max-w-6xl mx-auto text-center mb-16">
+        <div className="inline-block px-4 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-bold mb-4">
+          12부작 공동 칼럼 종합 인포그래픽
+        </div>
+        <h1 className="text-3xl md:text-5xl font-black mb-6 tracking-tight leading-tight">
+          좋은 기업이 좋은 도시를 만든다
+        </h1>
+        <p className="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed">
+          자본 추출 시스템을 넘어 가치가 순환하는 <br className="hidden md:block" /> 
+          <span className="text-indigo-600 font-bold underline underline-offset-4">지속 가능한 로컬 비즈니스 생태계</span>를 위한 통합 가이드
+        </p>
+      </header>
+
+      <main className="max-w-6xl mx-auto space-y-24">
+        
+        {/* Section 1: Philosophy - Capital Extraction vs Circulation */}
+        <section className="grid md:grid-cols-2 gap-8">
+          <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 relative overflow-hidden border-t-8 border-t-rose-500">
+            <h2 className="text-xl font-black mb-6 flex items-center gap-2 text-rose-600">
+              <ArrowDownCircle size={24} /> 추출의 논리: 유니콘 모델
+            </h2>
+            <div className="space-y-6">
+              <div className="flex gap-4">
+                <div className="shrink-0 w-10 h-10 bg-rose-50 rounded-lg flex items-center justify-center text-rose-500 font-bold italic text-xl">J</div>
+                <div>
+                  <h4 className="font-bold text-slate-800">단기적 J-커브 지향</h4>
+                  <p className="text-sm text-slate-500">외부 투자자의 빠른 Exit을 위해 지역 자원을 단기에 소진</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="shrink-0 w-10 h-10 bg-rose-50 rounded-lg flex items-center justify-center text-rose-500"><Coins size={20} /></div>
+                <div>
+                  <h4 className="font-bold text-slate-800">자본 추출 시스템</h4>
+                  <p className="text-sm text-slate-500">기업은 성공하지만, 수익은 배당과 회수를 통해 지역 밖으로 유출</p>
+                </div>
+              </div>
+              <p className="text-xs bg-rose-50 p-3 rounded-xl text-rose-700 font-medium">
+                결과: 젠트리피케이션 발생, 지역 고유성 파괴, 경제적 새는 양동이 효과
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 relative overflow-hidden border-t-8 border-t-emerald-500">
+            <h2 className="text-xl font-black mb-6 flex items-center gap-2 text-emerald-600">
+              <Repeat size={24} /> 순환의 논리: 로컬 정글 모델
+            </h2>
+            <div className="space-y-6">
+              <div className="flex gap-4">
+                <div className="shrink-0 w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center text-emerald-500"><HeartHandshake size={20} /></div>
+                <div>
+                  <h4 className="font-bold text-slate-800">인내 자본 (Patient Capital)</h4>
+                  <p className="text-sm text-slate-500">지역과 함께 호흡하며 장기적 성장을 도모하는 투자 방식</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="shrink-0 w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center text-emerald-500"><Repeat size={20} /></div>
+                <div>
+                  <h4 className="font-bold text-slate-800">가치 선순환 시스템</h4>
+                  <p className="text-sm text-slate-500">수익을 지역의 인재 채용, 공간 개선, 문화 인프라에 재투자</p>
+                </div>
+              </div>
+              <p className="text-xs bg-emerald-50 p-3 rounded-xl text-emerald-700 font-medium">
+                결과: 복제 불가능한 고유성 보존, 지역 내 부의 축적, 지속 가능한 일자리
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 2: Theory - Startup Jungle & Coexistence */}
+        <section className="bg-emerald-900 text-white p-10 rounded-[3rem] shadow-xl overflow-hidden relative">
+          <div className="relative z-10 text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-black mb-4">스타트업 정글 이론 (The Local Jungle)</h2>
+            <p className="text-emerald-200">거대 포식자(유니콘)만 있는 평원 대신, 다양한 스케일이 공존하는 정글</p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8 relative z-10">
+            <div className="bg-white/10 p-8 rounded-2xl backdrop-blur-sm border border-white/20">
+              <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-6">
+                <Building2 className="text-white" size={32} />
+              </div>
+              <h3 className="text-xl font-bold mb-3 flex items-center gap-2">코끼리 (Elephant) <span className="text-xs font-normal opacity-70">Anchor</span></h3>
+              <p className="text-sm text-emerald-100 leading-relaxed mb-4">생태계의 무게 중심을 잡아주는 앵커 기업/기관. 인프라를 제공하고 안정성을 부여합니다.</p>
+              <div className="text-[11px] bg-white/10 p-2 rounded text-emerald-200">#대기업 #공공기관 #지역거점</div>
+            </div>
+            
+            <div className="bg-white/20 p-8 rounded-2xl border border-white/30 transform md:scale-105 shadow-2xl">
+              <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6">
+                <Users className="text-emerald-900" size={32} />
+              </div>
+              <h3 className="text-xl font-bold mb-3 flex items-center gap-2">얼룩말 (Zebra) <span className="text-xs font-normal opacity-70">Main Engine</span></h3>
+              <p className="text-sm text-white leading-relaxed mb-4">수익과 목적을 모두 챙기는 로컬 벤처. 흑백의 조화처럼 현실적 수익과 사회적 가치를 병행합니다.</p>
+              <div className="text-[11px] bg-white/20 p-2 rounded text-white">#로컬스타트업 #목적지향기업 #성장형</div>
+            </div>
+
+            <div className="bg-white/10 p-8 rounded-2xl backdrop-blur-sm border border-white/20">
+              <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-6">
+                <Trees className="text-white" size={32} />
+              </div>
+              <h3 className="text-xl font-bold mb-3 flex items-center gap-2">식생 (Vegetation) <span className="text-xs font-normal opacity-70">Base</span></h3>
+              <p className="text-sm text-emerald-100 leading-relaxed mb-4">골목을 채우는 작은 가게와 창작자들. 정글의 토양이 되어 풍성한 다양성을 제공합니다.</p>
+              <div className="text-[11px] bg-white/10 p-2 rounded text-emerald-200">#소상공인 #크리에이터 #커뮤니티</div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 3: Mechanism - Balanced 3-Part TCJTC Loop */}
+        <section className="bg-white p-12 rounded-[3rem] shadow-sm border border-slate-200 overflow-hidden">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-black mb-2 flex items-center justify-center gap-2 text-indigo-900">
+               TCJTC 순환 엔진 <RotateCw className="animate-spin-slow text-indigo-400" size={24} />
+            </h2>
+            <p className="text-slate-500 font-medium">일자리, 트래픽, 자본의 3중 순환 (Triple Circulation)</p>
+          </div>
+
+          <div className="flex flex-col lg:flex-row items-center justify-around gap-16 lg:gap-4 relative">
+            
+            {/* The Animated Ring System (3-Way Split) */}
+            <div className="relative w-80 h-80 flex items-center justify-center">
+              
+              <div className="absolute inset-0 animate-[spin_15s_linear_infinite]">
+                <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
+                  <circle cx="50" cy="50" r="45" fill="none" stroke="#f1f5f9" strokeWidth="6" />
+                  <path d="M50 5 A45 45 0 0 1 88.97 72.5" fill="none" stroke="#3b82f6" strokeWidth="8" strokeLinecap="round" className="opacity-80" />
+                  <path d="M88.97 72.5 A45 45 0 0 1 11.03 72.5" fill="none" stroke="#10b981" strokeWidth="8" strokeLinecap="round" className="opacity-80" />
+                  <path d="M11.03 72.5 A45 45 0 0 1 50 5" fill="none" stroke="#f59e0b" strokeWidth="8" strokeLinecap="round" className="opacity-80" />
+                </svg>
+              </div>
+
+              {/* Positions Balanced at 120 Degree Intervals */}
+              <div className="absolute top-[-16px] left-1/2 -translate-x-1/2 flex flex-col items-center">
+                <div className="w-14 h-14 bg-blue-500 rounded-2xl shadow-xl flex items-center justify-center text-white ring-4 ring-white"><Users size={24} /></div>
+                <div className="bg-white px-3 py-1 rounded-full shadow-sm mt-2 border border-blue-100">
+                  <span className="text-[10px] font-black text-blue-600 uppercase tracking-wider">Jobs</span>
+                </div>
+              </div>
+              
+              <div className="absolute bottom-[20px] right-[-10px] flex flex-col items-center">
+                <div className="w-14 h-14 bg-emerald-500 rounded-2xl shadow-xl flex items-center justify-center text-white ring-4 ring-white"><TrendingUp size={24} /></div>
+                <div className="bg-white px-3 py-1 rounded-full shadow-sm mt-2 border border-emerald-100">
+                  <span className="text-[10px] font-black text-emerald-600 uppercase tracking-wider">Traffic</span>
+                </div>
+              </div>
+
+              <div className="absolute bottom-[20px] left-[-10px] flex flex-col items-center">
+                <div className="w-14 h-14 bg-amber-500 rounded-2xl shadow-xl flex items-center justify-center text-white ring-4 ring-white"><Coins size={24} /></div>
+                <div className="bg-white px-3 py-1 rounded-full shadow-sm mt-2 border border-amber-100">
+                  <span className="text-[10px] font-black text-amber-600 uppercase tracking-wider">Capital</span>
+                </div>
+              </div>
+
+              <div className="z-10 bg-white w-28 h-28 rounded-full shadow-inner border border-slate-50 flex flex-col items-center justify-center text-center">
+                <span className="text-2xl font-black text-slate-800 tracking-tighter">TCJTC</span>
+                <div className="flex gap-1 mt-1">
+                  <div className="w-2 h-2 rounded-full bg-blue-400"></div>
+                  <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
+                  <div className="w-2 h-2 rounded-full bg-amber-400"></div>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-6 max-w-md">
+              <div className="group p-5 bg-blue-50 rounded-2xl border-l-4 border-blue-500 transition-all hover:translate-x-2">
+                <h4 className="font-bold text-blue-800 mb-1 flex items-center gap-2">01. 일자리 창출 (Jobs)</h4>
+                <p className="text-xs text-blue-700 leading-relaxed italic">"사람이 머물고 싶은 이유를 설계하다"</p>
+                <p className="text-[11px] text-slate-600 mt-2 font-medium">로컬 벤처(VS)가 지역 특성에 맞는 브랜드를 개발하여 청년들이 모여 일하고 정주할 수 있는 환경을 조성합니다.</p>
+              </div>
+              
+              <div className="group p-5 bg-emerald-50 rounded-2xl border-l-4 border-emerald-500 transition-all hover:translate-x-2">
+                <h4 className="font-bold text-emerald-800 mb-1 flex items-center gap-2">02. 유입의 확장 (Traffic)</h4>
+                <p className="text-xs text-emerald-700 leading-relaxed italic">"방문자를 관계 인구로 전환하다"</p>
+                <p className="text-[11px] text-slate-600 mt-2 font-medium">좋은 일자리와 매력적인 콘텐츠는 관광객의 발길을 유도하고, 반복적인 방문을 통해 지역 경제의 활력을 높입니다.</p>
+              </div>
+
+              <div className="group p-5 bg-amber-50 rounded-2xl border-l-4 border-amber-500 transition-all hover:translate-x-2">
+                <h4 className="font-bold text-amber-800 mb-1 flex items-center gap-2">03. 자본의 선순환 (Capital)</h4>
+                <p className="text-xs text-amber-700 leading-relaxed italic">"수익을 지역의 미래로 환원하다"</p>
+                <p className="text-[11px] text-slate-600 mt-2 font-medium">축적된 수익은 외부로 유출되지 않고, 지역 자산화(AMC)와 새로운 비즈니스 빌딩에 재투자되어 생태계를 수호합니다.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 4: Implementation Strategy - Visualized Workflow */}
+        <section className="space-y-12 pt-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-black mb-2">실행 전략: 창조와 수호의 다이어그램</h2>
+            <p className="text-slate-500 italic font-medium">비즈니스를 세우는 벤처 스튜디오 & 도시를 지키는 지역경영회사</p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12">
+            
+            {/* Venture Studio Visual Flow */}
+            <div className="bg-white rounded-[3rem] p-8 border border-slate-200 shadow-sm relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110"></div>
+              <div className="flex items-center gap-4 mb-10">
+                <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-200">
+                  <Rocket size={32} />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-black text-blue-900 leading-none mb-1">벤처 스튜디오 (VS)</h3>
+                  <span className="text-sm font-bold text-blue-500 uppercase tracking-widest">The Creator</span>
+                </div>
+              </div>
+
+              <div className="space-y-12 relative">
+                {/* Visual Connector Line */}
+                <div className="absolute left-[31px] top-8 bottom-8 w-1 bg-gradient-to-b from-blue-100 via-blue-200 to-blue-100"></div>
+
+                {[
+                  { icon: <Search size={20} />, title: "발굴 (Discovery)", text: "지역 자원, 유휴 공간, 지역 인재 데이터베이스 분석" },
+                  { icon: <Hammer size={20} />, title: "빌딩 (Company Building)", text: "VS가 직접 자본을 투입하고 팀을 구성하여 법인 설립" },
+                  { icon: <ArrowUpRight size={20} />, title: "성장 지원 (Scale-up)", text: "마케팅, 전략, 인내 자본 투여를 통한 로컬 브랜드화" }
+                ].map((step, i) => (
+                  <div key={i} className="flex gap-8 relative z-10">
+                    <div className="w-16 h-16 shrink-0 bg-white border-4 border-blue-50 rounded-full flex items-center justify-center text-blue-600 shadow-sm">
+                      {step.icon}
+                    </div>
+                    <div>
+                      <h4 className="font-black text-slate-800 mb-1">{step.title}</h4>
+                      <p className="text-sm text-slate-500 leading-relaxed font-medium">{step.text}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-12 p-6 bg-blue-50 rounded-3xl border border-blue-100">
+                <div className="flex justify-between items-center text-xs font-black text-blue-700 uppercase tracking-widest mb-3">
+                  <span>Input</span>
+                  <span>VS Process</span>
+                  <span>Output</span>
+                </div>
+                <div className="flex items-center justify-between text-[11px] font-bold text-slate-600">
+                  <div className="text-center">지역 자산<br/>전문가 집단</div>
+                  <ArrowRightLeft size={16} className="text-blue-300" />
+                  <div className="text-center">직접 기획<br/>리스크 분담</div>
+                  <ArrowRightLeft size={16} className="text-blue-300" />
+                  <div className="text-center text-blue-700">지속 가능한<br/>얼룩말 기업</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Area Management Company Visual Flow */}
+            <div className="bg-white rounded-[3rem] p-8 border border-slate-200 shadow-sm relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110"></div>
+              <div className="flex items-center gap-4 mb-10">
+                <div className="w-16 h-16 bg-indigo-700 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-indigo-200">
+                  <ShieldCheck size={32} />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-black text-indigo-900 leading-none mb-1">지역경영회사 (AMC)</h3>
+                  <span className="text-sm font-bold text-indigo-500 uppercase tracking-widest">The Protector</span>
+                </div>
+              </div>
+
+              <div className="space-y-12 relative">
+                <div className="absolute left-[31px] top-8 bottom-8 w-1 bg-gradient-to-b from-indigo-100 via-indigo-200 to-indigo-100"></div>
+
+                {[
+                  { icon: <Anchor size={20} />, title: "앵커링 (Anchoring)", text: "지역 내 주요 공간 및 자산의 소유/운영 구조화" },
+                  { icon: <Shield size={20} />, title: "수호 (Defending)", text: "임대료 상한제 유도 및 젠트리피케이션 선제적 방어" },
+                  { icon: <Layers size={20} />, title: "공동 운영 (Co-Operation)", text: "지역 브랜딩, 공동 마케팅, 인프라 관리 플랫폼 역할" }
+                ].map((step, i) => (
+                  <div key={i} className="flex gap-8 relative z-10">
+                    <div className="w-16 h-16 shrink-0 bg-white border-4 border-indigo-50 rounded-full flex items-center justify-center text-indigo-600 shadow-sm">
+                      {step.icon}
+                    </div>
+                    <div>
+                      <h4 className="font-black text-slate-800 mb-1">{step.title}</h4>
+                      <p className="text-sm text-slate-500 leading-relaxed font-medium">{step.text}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-12 p-6 bg-indigo-50 rounded-3xl border border-indigo-100">
+                <div className="flex justify-between items-center text-xs font-black text-indigo-700 uppercase tracking-widest mb-3">
+                  <span>Input</span>
+                  <span>AMC Role</span>
+                  <span>Output</span>
+                </div>
+                <div className="flex items-center justify-between text-[11px] font-bold text-slate-600">
+                  <div className="text-center">토지주/운영자<br/>이해관계자</div>
+                  <ArrowRightLeft size={16} className="text-indigo-300" />
+                  <div className="text-center">공간 거버넌스<br/>가치 수호</div>
+                  <ArrowRightLeft size={16} className="text-indigo-300" />
+                  <div className="text-center text-indigo-700">뿌리 내릴<br/>건강한 도시</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Integration Diagram */}
+          <div className="mt-8 flex flex-col md:flex-row items-center justify-center gap-4 bg-slate-900 p-8 rounded-[2.5rem] shadow-2xl relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-indigo-900/20"></div>
+            <div className="relative z-10 flex flex-col md:flex-row items-center gap-6">
+              <div className="text-center">
+                <p className="text-blue-400 font-black text-lg">VS</p>
+                <p className="text-white text-xs font-bold">좋은 기업 생산</p>
+              </div>
+              <div className="flex items-center text-white/30">
+                <Repeat size={32} className="animate-spin-slow" />
+              </div>
+              <div className="text-center">
+                <p className="text-indigo-400 font-black text-lg">AMC</p>
+                <p className="text-white text-xs font-bold">좋은 토양 유지</p>
+              </div>
+              <div className="hidden md:block h-10 w-px bg-white/20 mx-4"></div>
+              <div className="bg-white/10 px-6 py-3 rounded-2xl border border-white/10 text-center">
+                <p className="text-emerald-400 font-black text-xl">선순환 생태계</p>
+                <p className="text-white/60 text-[10px] uppercase tracking-widest font-bold">Sustainable Local Eco-system</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 5: Integrated Ecosystem Logic Architecture */}
+        <section className="space-y-16">
+          <div className="text-center">
+            <h2 className="text-3xl font-black mb-4">통합적 선순환 생태계 아키텍처</h2>
+            <p className="text-slate-500 max-w-2xl mx-auto">철학적 토대에서 실행 엔진, 그리고 실질적 임팩트로 이어지는 논리적 체계화</p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-12">
+            {/* Logic Layer 1: Foundation */}
+            <div className="flex flex-col gap-6">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-slate-200 rounded-full flex items-center justify-center font-bold text-slate-600 text-sm">01</div>
+                <h3 className="font-black text-slate-800 uppercase tracking-tighter">Foundation (토대)</h3>
+              </div>
+              <div className="bg-slate-100 p-6 rounded-[2rem] border border-slate-200 flex-1 space-y-4">
+                <div className="p-4 bg-white rounded-2xl shadow-sm">
+                  <HeartHandshake className="text-rose-500 mb-2" size={24} />
+                  <h4 className="font-bold text-sm">인내 자본 (Capital)</h4>
+                  <p className="text-[11px] text-slate-500 leading-relaxed mt-1">단기 회수 논리를 거부하고 지역의 미래 가치에 베팅하는 투자의 전환</p>
+                </div>
+                <div className="p-4 bg-white rounded-2xl shadow-sm">
+                  <MapPin className="text-emerald-500 mb-2" size={24} />
+                  <h4 className="font-bold text-sm">지역 정체성 (Identity)</h4>
+                  <p className="text-[11px] text-slate-500 leading-relaxed mt-1">지역 고유의 자원과 스토리를 발굴하여 복제 불가능한 비즈니스 모델 설계</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Logic Layer 2: Operation */}
+            <div className="flex flex-col gap-6">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center font-bold text-indigo-600 text-sm">02</div>
+                <h3 className="font-black text-slate-800 uppercase tracking-tighter">Operation (구동)</h3>
+              </div>
+              <div className="bg-indigo-50 p-6 rounded-[2rem] border border-indigo-100 flex-1 space-y-4 relative">
+                <div className="absolute -right-6 top-1/2 -translate-y-1/2 hidden lg:block">
+                   <ArrowRightLeft className="text-indigo-200" size={40} />
+                </div>
+                <div className="p-4 bg-white rounded-2xl shadow-sm border border-indigo-100">
+                  <Workflow className="text-blue-600 mb-2" size={24} />
+                  <h4 className="font-bold text-sm">VS & AMC Synergy</h4>
+                  <p className="text-[11px] text-slate-500 leading-relaxed mt-1">좋은 기업(VS)과 좋은 토양(AMC)이 만나 젠트리피케이션 없는 성장 구현</p>
+                </div>
+                <div className="p-4 bg-white rounded-2xl shadow-sm border border-indigo-100">
+                  <Activity className="text-emerald-600 mb-2" size={24} />
+                  <h4 className="font-bold text-sm">TCJTC Mechanism</h4>
+                  <p className="text-[11px] text-slate-500 leading-relaxed mt-1">일자리-트래픽-자본이 멈추지 않고 순환하며 지역 내 부를 축적하는 동력</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Logic Layer 3: Impact */}
+            <div className="flex flex-col gap-6">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center font-bold text-emerald-600 text-sm">03</div>
+                <h3 className="font-black text-slate-800 uppercase tracking-tighter">Impact (결실)</h3>
+              </div>
+              <div className="bg-emerald-50 p-6 rounded-[2rem] border border-emerald-100 flex-1 space-y-4">
+                <div className="p-4 bg-white rounded-2xl shadow-sm">
+                  <Network className="text-indigo-600 mb-2" size={24} />
+                  <h4 className="font-bold text-sm">스타트업 정글 (Jungle)</h4>
+                  <p className="text-[11px] text-slate-500 leading-relaxed mt-1">대/중/소 기업과 소상공인이 공존하며 회복탄력성을 갖춘 경제 커뮤니티</p>
+                </div>
+                <div className="p-4 bg-white rounded-2xl shadow-sm">
+                  <Globe className="text-emerald-600 mb-2" size={24} />
+                  <h4 className="font-bold text-sm">좋은 도시 (Good City)</h4>
+                  <p className="text-[11px] text-slate-500 leading-relaxed mt-1">살고 싶고, 일하고 싶고, 즐길 수 있는 복합적인 가치가 실현된 공간</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Growth Comparison Graph - Abstract Visualization */}
+          <div className="bg-white p-10 rounded-[3rem] border border-slate-200 shadow-sm overflow-hidden">
+             <h4 className="text-center font-black text-slate-800 mb-10 tracking-tight italic">지속 가능한 성장의 궤적: 추출형 vs 순환형</h4>
+             <div className="relative h-64 w-full max-w-4xl mx-auto flex items-end border-l-2 border-b-2 border-slate-200 pl-4 pb-4">
+                {/* Extraction Curve (Linear/Exit focus) */}
+                <svg className="absolute bottom-4 left-4 w-[calc(100%-1rem)] h-[calc(100%-1rem)] overflow-visible">
+                  <path d="M 0 200 L 150 150 L 300 100 L 450 50 L 500 180" fill="none" stroke="#f43f5e" strokeWidth="4" strokeDasharray="8 4" />
+                  <circle cx="500" cy="180" r="6" fill="#f43f5e" />
+                  <text x="460" y="210" className="text-[10px] font-bold fill-rose-500">Exit (자본 유출)</text>
+                  
+                  {/* Circulation Curve (Compounding) */}
+                  <path d="M 0 200 Q 200 190, 350 140 T 700 30" fill="none" stroke="#10b981" strokeWidth="6" />
+                  <circle cx="700" cy="30" r="6" fill="#10b981" />
+                  <text x="600" y="15" className="text-[10px] font-black fill-emerald-600 italic">Compounding (선순환 성장)</text>
+                </svg>
+                
+                <div className="absolute bottom-[-24px] right-0 text-[10px] font-bold text-slate-400">Time (시간)</div>
+                <div className="absolute top-0 left-[-32px] text-[10px] font-bold text-slate-400 -rotate-90">Value (가치)</div>
+             </div>
+             <div className="mt-12 grid md:grid-cols-2 gap-8 text-[11px] px-4 font-medium text-slate-500">
+                <div className="flex gap-2">
+                   <div className="w-3 h-3 bg-rose-500 rounded-full mt-1 shrink-0"></div>
+                   <p><span className="font-bold text-rose-600">추출형 성장 (유니콘):</span> 일정 시점에 도달하면 자본 회수를 위해 지역 생태계를 떠나거나 가치를 외부로 전이시킵니다.</p>
+                </div>
+                <div className="flex gap-2">
+                   <div className="w-3 h-3 bg-emerald-500 rounded-full mt-1 shrink-0"></div>
+                   <p><span className="font-bold text-emerald-600">순환형 성장 (정글):</span> 성장의 과실이 다시 지역의 씨앗이 되어 복리(Compounding) 효과로 지역 가치를 기하급수적으로 높입니다.</p>
+                </div>
+             </div>
+          </div>
+        </section>
+
+        {/* Section 6: The Goal - 5 Conditions of a Good City (Legacy) */}
+        <section className="bg-slate-900 text-white p-12 rounded-[3.5rem] relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 blur-[100px] rounded-full"></div>
+          <div className="text-center mb-12 relative z-10">
+            <h2 className="text-3xl font-black mb-4">우리가 꿈꾸는 '좋은 도시'</h2>
+            <p className="text-slate-400">한국형 스타트업 정글이 구현된 도시의 5가지 설계 조건</p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 relative z-10">
+            {[
+              { title: "고유성", icon: <MapPin size={24} />, text: "복제 불가능한 고유 정체성 보존" },
+              { title: "자본 순환", icon: <Repeat size={24} />, text: "외부 유출 없는 지역 내 부의 축적" },
+              { title: "다양성", icon: <Scale size={24} />, text: "대-중-소 기업의 유기적 공존" },
+              { title: "지속성", icon: <TrendingUp size={24} />, text: "인내 자본을 통한 장기 성장" },
+              { title: "혁신성", icon: <Lightbulb size={24} />, text: "끊임없는 로컬 브랜드의 탄생" }
+            ].map((item, i) => (
+              <div key={i} className="bg-white/5 p-6 rounded-3xl text-center flex flex-col items-center border border-white/10 hover:bg-white/10 transition-all duration-300">
+                <div className="text-indigo-400 mb-4 bg-indigo-500/10 p-3 rounded-2xl">{item.icon}</div>
+                <h5 className="font-bold mb-2 text-sm text-indigo-100">{item.title}</h5>
+                <p className="text-[10px] text-slate-400 leading-relaxed font-medium">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* NEW Section 7: THE MASTER BLUEPRINT - The Grand Synthesis */}
+        <section className="bg-white p-12 md:p-16 rounded-[4rem] border border-slate-200 shadow-2xl relative overflow-hidden">
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+             <div className="absolute inset-0" style={{backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '20px 20px'}}></div>
+          </div>
+
+          <div className="relative z-10 space-y-16">
+            <div className="text-center">
+              <span className="text-indigo-600 font-black text-xs uppercase tracking-[0.3em] mb-4 block">Grand Synthesis</span>
+              <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tighter leading-none">
+                마스터 블루프린트:<br/>회복탄력적 도시의 통합 설계도
+              </h2>
+              <p className="text-slate-500 max-w-3xl mx-auto font-medium leading-relaxed">
+                개별 주체들이 어떻게 연결되어 거대한 유기체를 이루는지, <br className="hidden md:block"/> 
+                이 설계도를 반복적으로 살펴보며 도시의 미래를 상상해 보세요.
+              </p>
+            </div>
+
+            {/* The Master Diagram: Concentric Ecosystem */}
+            <div className="relative flex items-center justify-center py-20 min-h-[600px]">
+               
+               {/* Core Center: Identity & The Good City */}
+               <div className="relative z-50 group">
+                  <div className="w-48 h-48 bg-slate-900 rounded-full flex flex-col items-center justify-center text-center p-6 border-8 border-white shadow-2xl transition-transform group-hover:scale-110 duration-500">
+                     <div className="text-emerald-400 mb-2"><Globe size={32} /></div>
+                     <span className="text-white font-black text-xl leading-tight">GOOD CITY<br/><span className="text-emerald-400 text-sm uppercase tracking-widest">Core Value</span></span>
+                  </div>
+                  {/* Rotating Inner Label */}
+                  <div className="absolute inset-0 -m-8 border border-slate-200 rounded-full animate-spin-slow">
+                     <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-white px-3 py-1 text-[10px] font-black border border-slate-200 rounded-full uppercase tracking-widest">Locality</div>
+                  </div>
+               </div>
+
+               {/* Ring 1: The Jungle Inhabitants (Elephant, Zebra, Vegetation) */}
+               <div className="absolute w-[450px] h-[450px] border-2 border-slate-100 rounded-full flex items-center justify-center">
+                  {/* Positioned Elements */}
+                  <div className="absolute top-4 bg-emerald-50 p-4 rounded-2xl border border-emerald-100 flex items-center gap-3 shadow-sm hover:shadow-md transition-shadow">
+                     <Building2 className="text-emerald-600" size={24}/>
+                     <div className="text-left"><p className="font-black text-xs leading-none">ELEPHANT</p><p className="text-[10px] font-bold text-emerald-600">The Anchor</p></div>
+                  </div>
+                  <div className="absolute bottom-10 left-10 bg-indigo-50 p-4 rounded-2xl border border-indigo-100 flex items-center gap-3 shadow-sm hover:shadow-md transition-shadow">
+                     <Users className="text-indigo-600" size={24}/>
+                     <div className="text-left"><p className="font-black text-xs leading-none">ZEBRA</p><p className="text-[10px] font-bold text-indigo-600">The Purpose</p></div>
+                  </div>
+                  <div className="absolute bottom-10 right-10 bg-amber-50 p-4 rounded-2xl border border-amber-100 flex items-center gap-3 shadow-sm hover:shadow-md transition-shadow">
+                     <Trees className="text-amber-600" size={24}/>
+                     <div className="text-left"><p className="font-black text-xs leading-none">VEGETATION</p><p className="text-[10px] font-bold text-amber-600">The Diversity</p></div>
+                  </div>
+               </div>
+
+               {/* Ring 2: The Action Engines (VS & AMC) */}
+               <div className="absolute w-[680px] h-[680px] border-2 border-dashed border-slate-200 rounded-full flex items-center justify-center opacity-40 md:opacity-100">
+                  {/* VS and AMC positioned opposite to each other */}
+                  <div className="absolute top-1/2 left-0 -translate-x-1/2 bg-blue-600 text-white p-6 rounded-3xl shadow-2xl flex flex-col items-center gap-2 group transition-all hover:-translate-x-2">
+                     <Rocket size={32} className="group-hover:animate-bounce" />
+                     <span className="font-black text-sm">VS</span>
+                     <span className="text-[10px] font-bold opacity-70">CREATOR</span>
+                  </div>
+                  <div className="absolute top-1/2 right-0 translate-x-1/2 bg-indigo-700 text-white p-6 rounded-3xl shadow-2xl flex flex-col items-center gap-2 group transition-all hover:translate-x-2">
+                     <ShieldCheck size={32} className="group-hover:animate-pulse" />
+                     <span className="font-black text-sm">AMC</span>
+                     <span className="text-[10px] font-bold opacity-70">PROTECTOR</span>
+                  </div>
+               </div>
+
+               {/* Connecting Flow Lines (TCJTC Path Visualization) */}
+               <div className="absolute inset-0 pointer-events-none overflow-visible">
+                  <svg className="w-full h-full overflow-visible" viewBox="0 0 800 600">
+                    <defs>
+                      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#cbd5e1" />
+                      </marker>
+                    </defs>
+                    {/* Path: Patient Capital to VS */}
+                    <path d="M 50 100 Q 150 50, 200 250" fill="none" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrowhead)" />
+                    <text x="60" y="80" className="text-[10px] font-bold fill-slate-400">Patient Capital</text>
+
+                    {/* Path: VS to Zebra */}
+                    <path d="M 230 300 L 320 400" fill="none" stroke="#3b82f6" strokeWidth="3" markerEnd="url(#arrowhead)" />
+                    <text x="235" y="360" className="text-[10px] font-black fill-blue-500 italic">Building</text>
+
+                    {/* Path: Zebra to Traffic */}
+                    <path d="M 400 480 Q 550 500, 650 350" fill="none" stroke="#10b981" strokeWidth="3" markerEnd="url(#arrowhead)" />
+                    <text x="560" y="460" className="text-[10px] font-black fill-emerald-600 italic">Attracting</text>
+
+                    {/* Path: Traffic to Capital */}
+                    <path d="M 700 280 Q 750 150, 550 50" fill="none" stroke="#f59e0b" strokeWidth="3" markerEnd="url(#arrowhead)" />
+                    <text x="680" y="100" className="text-[10px] font-black fill-amber-600 italic">Generating</text>
+
+                    {/* Path: Capital back to System (AMC Re-investment) */}
+                    <path d="M 450 50 Q 550 150, 580 250" fill="none" stroke="#6366f1" strokeWidth="3" markerEnd="url(#arrowhead)" />
+                    <text x="585" y="180" className="text-[10px] font-black fill-indigo-600 italic">Re-investing</text>
+                  </svg>
+               </div>
+            </div>
+
+            {/* Systematic Logic Summaries */}
+            <div className="grid md:grid-cols-4 gap-4 mt-20 relative z-20">
+               {[
+                 { 
+                   label: "STEP A: INPUT", 
+                   color: "bg-rose-50 border-rose-100 text-rose-700", 
+                   title: "인내 자본의 유입", 
+                   desc: "단기 회수가 아닌 지역의 가치에 투자하는 자본 확보" 
+                 },
+                 { 
+                   label: "STEP B: PROCESS", 
+                   color: "bg-blue-50 border-blue-100 text-blue-700", 
+                   title: "비즈니스 빌딩", 
+                   desc: "VS가 지역 자원을 결합해 목적 지향적 얼룩말 기업 탄생" 
+                 },
+                 { 
+                   label: "STEP C: MECHANISM", 
+                   color: "bg-emerald-50 border-emerald-100 text-emerald-700", 
+                   title: "TCJTC 가동", 
+                   desc: "일자리와 트래픽이 자본을 만들고, 자본이 다시 지역으로 순환" 
+                 },
+                 { 
+                   label: "STEP D: DEFENSE", 
+                   color: "bg-indigo-50 border-indigo-100 text-indigo-700", 
+                   title: "가치 수호 및 재투자", 
+                   desc: "AMC가 지역 자산을 보호하고 축적된 부를 다시 시스템에 투입" 
+                 }
+               ].map((box, i) => (
+                 <div key={i} className={`${box.color} p-6 rounded-[2rem] border shadow-sm flex flex-col gap-2 transition-transform hover:-translate-y-2`}>
+                   <span className="text-[10px] font-black tracking-widest opacity-60">{box.label}</span>
+                   <h5 className="font-black text-slate-800">{box.title}</h5>
+                   <p className="text-[11px] font-medium leading-relaxed opacity-80">{box.desc}</p>
+                 </div>
+               ))}
+            </div>
+
+            {/* Ultimate Vision Statement */}
+            <div className="bg-slate-900 rounded-[3rem] p-8 md:p-12 text-center text-white shadow-2xl relative overflow-hidden">
+               <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(16,185,129,0.1),transparent)]"></div>
+               <div className="relative z-10 space-y-4">
+                  <h3 className="text-2xl md:text-3xl font-black tracking-tight leading-tight italic">
+                    "도시를 추출의 대상이 아닌, <br className="md:hidden"/> <span className="text-emerald-400 italic">공존과 순환의 정글</span>로 만드는 일"
+                  </h3>
+                  <p className="text-slate-400 text-sm max-w-xl mx-auto font-medium leading-relaxed italic">
+                    우리는 건물을 짓는 대신 생태계를 설계합니다. <br/>
+                    좋은 기업이 좋은 토양에 뿌리내릴 때, 도시는 비로소 스스로 자라기 시작합니다.
+                  </p>
+                  <div className="pt-6 flex justify-center gap-8 text-[11px] font-black uppercase tracking-[0.2em] text-emerald-500/50">
+                     <span className="flex items-center gap-2"><Maximize size={14}/> Resiliency</span>
+                     <span className="flex items-center gap-2"><Cpu size={14}/> Intelligence</span>
+                     <span className="flex items-center gap-2"><RefreshCcw size={14}/> Circulation</span>
+                  </div>
+               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer Insight */}
+        <section className="text-center pb-12">
+          <div className="inline-flex items-center gap-4 bg-white px-8 py-5 rounded-full shadow-lg border border-slate-100">
+            <div className="text-indigo-600 font-black flex items-center gap-2">
+               <Globe size={22} className="animate-pulse" /> 로컬의 시대
+            </div>
+            <div className="h-6 w-px bg-slate-200"></div>
+            <p className="text-slate-500 font-semibold text-sm">
+              도시의 성장은 단순히 건물을 높이는 것이 아니라, <br className="md:hidden" />
+              <span className="text-slate-800 font-black">기업이 뿌리내릴 건강한 토양</span>을 만드는 과정입니다.
+            </p>
+          </div>
+        </section>
+      </main>
+
+      <footer className="max-w-6xl mx-auto text-center border-t border-slate-200 py-16 text-slate-400 text-sm">
+        <div className="mb-4 flex justify-center gap-6 opacity-30">
+          <div className="h-px w-24 bg-slate-400 self-center"></div>
+          <p className="font-black tracking-[0.2em] uppercase">Good Company • Good City</p>
+          <div className="h-px w-24 bg-slate-400 self-center"></div>
+        </div>
+        <p className="italic font-medium text-slate-400/80">본 원고는 지역의 미래를 고민하는 씨에스피 & 비로컬의 12부작 공동 프로젝트를 기반으로 작성되었습니다.</p>
+      </footer>
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+          animation: spin-slow 20s linear infinite;
+        }
+      `}} />
+    </div>
+  );
+};
+
+export default App;
