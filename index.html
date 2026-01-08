@@ -1,12 +1,797 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Good Company, Good City</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 서울 지하도상가 대전환: Masterplan Final (v3)</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js Annotation Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Marked for Markdown Parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #0f172a;
+            color: #f1f5f9;
+            overflow-x: hidden;
+        }
+
+        /* Typography & Utilities */
+        .neon-text { text-shadow: 0 0 15px rgba(6, 182, 212, 0.6); }
+        .neon-border { box-shadow: 0 0 10px rgba(6, 182, 212, 0.3); }
+        
+        /* Scroll Animations */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Map Styles */
+        .seoul-map-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background-color: #1e293b;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            border: 1px solid #334155;
+        }
+        .map-dot {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s;
+            z-index: 10;
+        }
+        .map-dot:hover { transform: scale(1.5); z-index: 20; }
+        .map-dot::after {
+            content: attr(data-label);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            margin-bottom: 5px;
+        }
+        .map-dot:hover::after { opacity: 1; }
+        
+        .pulse-red { animation: pulse-red 2s infinite; }
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        
+        .han-river {
+            position: absolute;
+            top: 55%;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(90deg, transparent 0%, #3b82f6 20%, #3b82f6 80%, transparent 100%);
+            opacity: 0.3;
+            transform: rotate(-5deg);
+            filter: blur(5px);
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+        }
+
+        /* Detail Cards */
+        .detail-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+        .detail-card:hover { border-color: #06b6d4; }
+
+        /* Case Study Card */
+        .case-card {
+            background: #1e293b;
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+        .case-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border-color: #3b82f6;
+        }
+        .case-header {
+            padding: 1rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .case-body {
+            padding: 1.5rem;
+            border-top: 1px solid #334155;
+        }
+
+        /* Custom Shapes for Execution Plans */
+        .arrow-box {
+            position: relative;
+            background: #1e293b;
+            padding: 1.5rem;
+            margin-right: 2rem;
+            clip-path: polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%);
+        }
+        @media (max-width: 768px) {
+            .arrow-box { margin-right: 0; margin-bottom: 1rem; clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 50% 100%, 0% 85%); }
+        }
+
+        .blueprint-grid {
+            background-image: linear-gradient(#334155 1px, transparent 1px), linear-gradient(90deg, #334155 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-color: #0f172a;
+        }
+
+        /* AI Chat Widget */
+        .ai-chat-widget {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+            width: 400px;
+            max-width: 90vw;
+            display: none;
+            flex-direction: column;
+            background-color: #1e293b;
+            border: 1px solid #06b6d4;
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.3);
+            border-radius: 1rem;
+            overflow: hidden;
+            height: 600px;
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        .chat-bubble { padding: 0.8rem; border-radius: 0.8rem; max-width: 85%; font-size: 0.9rem; line-height: 1.6; margin-bottom: 0.5rem; }
+        .chat-bubble.user { background-color: #2563eb; color: white; align-self: flex-end; border-bottom-right-radius: 0; }
+        .chat-bubble.ai { background-color: #334155; color: #f1f5f9; align-self: flex-start; border-bottom-left-radius: 0; border: 1px solid #475569; }
+        
+        .section-divider { height: 1px; background: linear-gradient(to right, transparent, #334155, transparent); margin: 5rem 0; }
+        
+        /* Flags */
+        .flag-icon { width: 24px; height: 16px; display: inline-block; margin-right: 8px; border-radius: 2px; background-color: #475569; }
+        .flag-sg { background: linear-gradient(to bottom, #ef4444 50%, white 50%); }
+        .flag-th { background: linear-gradient(to bottom, #ef4444 16%, white 16%, white 33%, #1d4ed8 33%, #1d4ed8 66%, white 66%, white 83%, #ef4444 83%); }
+        .flag-ca { background: linear-gradient(to right, #ef4444 25%, white 25%, white 75%, #ef4444 75%); }
+        .flag-se { background: #006aa7; border-bottom: 4px solid #fecc00; border-left: 4px solid #fecc00; }
+    </style>
+</head>
+<body class="antialiased selection:bg-cyan-500 selection:text-white pb-32">
+
+    <!-- Header -->
+    <header class="relative w-full py-32 px-6 bg-[url('https://images.unsplash.com/photo-1695642403302-39a2503248ee?q=80&w=2600&auto=format&fit=crop')] bg-cover bg-center bg-no-repeat border-b border-slate-700 text-center">
+        <div class="absolute inset-0 bg-slate-900/90"></div>
+        <div class="relative max-w-6xl mx-auto z-10 reveal-on-scroll">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-8 text-xs font-bold tracking-[0.2em] text-cyan-400 uppercase border border-cyan-500/50 rounded-full bg-cyan-950/30 backdrop-blur-sm">
+                Visualized Masterplan
+            </div>
+            <h1 class="text-4xl md:text-7xl font-black mb-6 tracking-tight leading-none text-white">
+                서울 지하도상가 대전환
+            </h1>
+            <p class="text-lg md:text-xl text-slate-300 font-light max-w-3xl mx-auto break-keep leading-relaxed pt-4">
+                이동하는 통로(Passage)에서 머무는 장소(Place)로.<br>
+                <strong>기후 회복탄력성</strong>과 <strong>인구 구조 변화</strong>에 대응하는 10년 마스터플랜.
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+        <!-- 1. INTRO: TRIPLE CRUNCH -->
+        <section class="reveal-on-scroll">
+            <div class="mb-8 border-l-4 border-amber-500 pl-4">
+                <h2 class="text-2xl md:text-4xl font-bold text-white">1. 서론: 삼중고 (Triple Crunch)</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                    <span class="text-3xl mb-3 block">🏚️</span>
+                    <h3 class="font-bold text-white mb-2">물리적 노후화</h3>
+                    <p class="text-sm text-slate-400">평균 44.4년. 배수 용량 한계.</p>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                    <span class="text-3xl mb-3 block">⚖️</span>
+                    <h3 class="font-bold text-white mb-2">제도적 모순</h3>
+                    <p class="text-sm text-slate-400">불법 전대율 91.7%. 책임 경영 부재.</p>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                    <span class="text-3xl mb-3 block">📉</span>
+                    <h3 class="font-bold text-white mb-2">경직된 운영</h3>
+                    <p class="text-sm text-slate-400">최고가 입찰로 인한 단기 수익 매몰.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 2. MAP: FACT CHECK -->
+        <section id="map-section" class="reveal-on-scroll">
+            <div class="mb-10 text-center">
+                <h2 class="text-3xl md:text-5xl font-black text-white mb-4">서울시 지하도상가 현황지도</h2>
+                <p class="text-slate-400">총 25개소 / 2,788개 점포 (서울시설공단 관리 기준)</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Map Graphic -->
+                <div class="lg:col-span-2 seoul-map-container shadow-2xl relative">
+                    <div class="absolute top-4 left-4 bg-slate-900/80 p-3 rounded-lg border border-slate-700 z-20 text-xs">
+                        <div class="flex items-center gap-2 mb-1"><span class="w-3 h-3 rounded-full bg-purple-500"></span> 도심권 (문화/보행)</div>
+                        <div class="flex items-center gap-2 mb-1"><span class="w-3 h-3 rounded-full bg-red-500 pulse-red"></span> 침수취약/저지대</div>
+                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-emerald-500"></span> 외곽/생활권</div>
+                    </div>
+                    
+                    <div class="han-river"></div>
+
+                    <!-- Map Dots -->
+                    <div class="map-dot bg-purple-500" style="top: 35%; left: 45%;" data-label="종로권 (종각~종로4가)"></div>
+                    <div class="map-dot bg-purple-500" style="top: 38%; left: 46%;" data-label="을지로권 (입구~4가)"></div>
+                    <div class="map-dot bg-purple-500" style="top: 40%; left: 44%;" data-label="명동/회현/남대문"></div>
+                    <div class="map-dot bg-purple-500" style="top: 32%; left: 55%;" data-label="동대문"></div>
+                    <div class="map-dot bg-red-500 pulse-red" style="top: 55%; left: 25%;" data-label="영등포 (시장/로터리)"></div>
+                    <div class="map-dot bg-red-500 pulse-red" style="top: 60%; left: 60%;" data-label="고속터미널 (고투몰)"></div>
+                    <div class="map-dot bg-red-500 pulse-red" style="top: 65%; left: 62%;" data-label="강남역"></div>
+                    <div class="map-dot bg-emerald-500" style="top: 58%; left: 75%;" data-label="잠실/잠실광장"></div>
+                </div>
+
+                <!-- Info Panel -->
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 flex flex-col justify-center">
+                    <h3 class="text-xl font-bold text-white mb-4 border-l-4 border-cyan-500 pl-3">권역별 특성</h3>
+                    <ul class="space-y-4 text-sm text-slate-300">
+                        <li class="p-3 bg-slate-900 rounded-lg">
+                            <strong class="text-purple-400 block mb-1">🟣 도심권 (13개소)</strong>
+                            을지로, 종로, 명동 등. 노후화 심각. <br>→ <strong>보행/문화 공간화 유리</strong>
+                        </li>
+                        <li class="p-3 bg-slate-900 rounded-lg">
+                            <strong class="text-red-400 block mb-1">🔴 강남/영등포권 (7개소)</strong>
+                            저지대 항아리 지형. 집중호우 취약.<br>→ <strong>기후 쉘터/방재 기능 필수</strong>
+                        </li>
+                        <li class="p-3 bg-slate-900 rounded-lg">
+                            <strong class="text-emerald-400 block mb-1">🟢 기타/외곽 (5개소)</strong>
+                            잠실, 청량리 등 대형 환승 연계.<br>→ <strong>물류/편의 거점화</strong>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 3. FUTURE OUTLOOK GRAPH: 2026 TIPPING POINT -->
+        <section class="reveal-on-scroll">
+            <div class="mb-10 text-center">
+                <h2 class="text-3xl md:text-5xl font-black text-white mb-4">2026: 인구 구조의 '티핑 포인트'</h2>
+                <p class="text-slate-400 text-lg">"서울, 초고령사회(Super-Aged Society) 진입의 원년"</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Climate Graph -->
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                    <h3 class="text-lg font-bold text-blue-400 mb-4">🌊 기후 위기: 집중호우 빈도 (IPCC 시나리오)</h3>
+                    <div class="chart-container">
+                        <canvas id="climateChart"></canvas>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-4 text-center">* 과거 100년 빈도 폭우가 10년 단위로 단축됨을 시각화</p>
+                </div>
+
+                <!-- Demographic Graph (ENHANCED) -->
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 relative overflow-hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold text-purple-400">📉 소비 절벽: 2026 골든크로스</h3>
+                        <span class="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded animate-pulse">2026 WARNING</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                    <div class="mt-4 bg-slate-900 p-4 rounded-xl border-l-4 border-purple-500">
+                        <h4 class="text-white font-bold text-sm mb-1">💡 Insight: 2026년의 의미</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            서울시 65세 이상 인구가 20%를 돌파하며 <strong>초고령사회</strong>에 진입합니다.
+                            지하도상가 주 고객이었던 1020세대는 급감하고, 병원/약국을 찾는 시니어 유동인구가 폭증하는 <strong>소비 주축의 영구적 이동</strong>이 시작됩니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 4. CORE STRATEGY: GLOBAL BENCHMARKING -->
+        <section class="reveal-on-scroll">
+            <div class="mb-12 border-l-4 border-amber-500 pl-6">
+                <h2 class="text-3xl md:text-5xl font-bold text-white">핵심 전략 I: 아시아 기후 적응형 상권</h2>
+                <p class="text-slate-400 mt-2">여름철 폭염/호우 대응을 위한 글로벌 벤치마킹</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <!-- Case Study: Singapore -->
+                <div class="case-card">
+                    <div class="case-header bg-red-900/30 text-red-100">
+                        <span class="flex items-center"><span class="flag-icon flag-sg"></span> 싱가포르 (Singapore)</span>
+                        <span class="text-xs border border-red-500 px-2 py-1 rounded">오차드 로드 (Orchard Rd)</span>
+                    </div>
+                    <div class="case-body">
+                        <h4 class="text-xl font-bold text-white mb-2">All-Weather Retail Link</h4>
+                        <p class="text-sm text-slate-300 mb-4">22개 쇼핑몰을 잇는 2.2km 지하 터널.</p>
+                        <div class="bg-slate-900 p-4 rounded-lg flex items-center justify-between text-xs text-slate-400">
+                            <div class="text-center"><div class="text-2xl mb-1">🏢</div>몰 A</div>
+                            <div class="h-1 flex-1 bg-red-500 mx-2 relative"><span class="absolute -top-4 left-1/2 -translate-x-1/2 text-[10px] text-white">Cooling Link</span></div>
+                            <div class="text-center"><div class="text-2xl mb-1">🚇</div>MRT</div>
+                            <div class="h-1 flex-1 bg-red-500 mx-2"></div>
+                            <div class="text-center"><div class="text-2xl mb-1">🏢</div>몰 B</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study: Bangkok -->
+                <div class="case-card">
+                    <div class="case-header bg-blue-900/30 text-blue-100">
+                        <span class="flex items-center"><span class="flag-icon flag-th"></span> 태국 방콕 (Bangkok)</span>
+                        <span class="text-xs border border-blue-500 px-2 py-1 rounded">원숭이 볼 (Kaem Ling)</span>
+                    </div>
+                    <div class="case-body">
+                        <h4 class="text-xl font-bold text-white mb-2">지하 켐링 (Underground Retention)</h4>
+                        <p class="text-sm text-slate-300 mb-4">빗물을 지하에 일시 저장했다가 배출.</p>
+                        <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                            <div class="bg-slate-900 p-2 rounded"><div class="text-xl mb-1">🌧️</div>폭우</div>
+                            <div class="bg-blue-900/50 p-2 rounded border border-blue-500"><div class="text-xl mb-1">📥</div>지하 저장</div>
+                            <div class="bg-slate-900 p-2 rounded"><div class="text-xl mb-1">🌊</div>배출</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CORE STRATEGY II -->
+        <section class="reveal-on-scroll">
+            <div class="mb-12 border-l-4 border-cyan-500 pl-6">
+                <h2 class="text-3xl md:text-5xl font-bold text-white">핵심 전략 II: 윈터 시티 지하 공간</h2>
+                <p class="text-slate-400 mt-2">겨울철 혹한/미세먼지 대응 및 에너지 절감</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <!-- Case Study: Montreal -->
+                <div class="case-card">
+                    <div class="case-header bg-cyan-900/30 text-cyan-100">
+                        <span class="flex items-center"><span class="flag-icon flag-ca"></span> 몬트리올 (Montreal)</span>
+                        <span class="text-xs border border-cyan-500 px-2 py-1 rounded">RÉSO</span>
+                    </div>
+                    <div class="case-body">
+                        <h4 class="text-xl font-bold text-white mb-2">지하 열 순환 고리</h4>
+                        <p class="text-sm text-slate-300 mb-4">32km 터널로 60개 빌딩 연결. 겨울철 쾌적한 이동.</p>
+                        <div class="bg-slate-900 p-4 rounded text-xs text-center text-cyan-400">
+                            ❄️ 외부 -20°C  VS  🌡️ 지하 +20°C
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study: Stockholm -->
+                <div class="case-card">
+                    <div class="case-header bg-indigo-900/30 text-indigo-100">
+                        <span class="flex items-center"><span class="flag-icon flag-se"></span> 스톡홀름 (Stockholm)</span>
+                        <span class="text-xs border border-indigo-500 px-2 py-1 rounded">Jernhusen</span>
+                    </div>
+                    <div class="case-body">
+                        <h4 class="text-xl font-bold text-white mb-2">체온 에너지 회수</h4>
+                        <p class="text-sm text-slate-300 mb-4">유동인구 체온을 난방 에너지로 재활용.</p>
+                        <div class="flex items-center justify-center gap-4 bg-slate-900 p-3 rounded-lg text-xs">
+                            <div class="text-center"><span class="text-2xl">🚶</span><br>체온</div>
+                            <div class="text-slate-500">➡</div>
+                            <div class="text-center text-indigo-400"><span class="text-2xl">⚙️</span><br>열교환</div>
+                            <div class="text-slate-500">➡</div>
+                            <div class="text-center text-orange-400"><span class="text-2xl">🔥</span><br>난방</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 5. EXECUTION PLAN I (Visualized) -->
+        <section class="reveal-on-scroll">
+            <div class="mb-10 flex items-end gap-4">
+                <h2 class="text-3xl md:text-4xl font-black text-white">실행 대안 I</h2>
+                <span class="text-xl text-pink-500 font-bold mb-1">공간 혁신 (Space Innovation)</span>
+            </div>
+
+            <div class="blueprint-grid p-8 rounded-3xl border border-slate-600 shadow-2xl relative">
+                <div class="absolute top-4 right-4 text-xs text-slate-500 uppercase font-mono tracking-widest">Blueprint Concept</div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Module 1 -->
+                    <div class="bg-slate-800/90 border border-pink-500/50 p-6 rounded-xl hover:bg-slate-800 transition-all group">
+                        <div class="flex justify-between mb-4">
+                            <span class="text-3xl group-hover:scale-110 transition-transform">🌱</span>
+                            <span class="text-xs bg-pink-900/50 text-pink-300 px-2 py-1 rounded">생산기지</span>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-2">스마트팜 (Metro Farm)</h4>
+                        <div class="flex items-center gap-2 text-xs text-slate-400 mt-4 bg-slate-900 p-2 rounded">
+                            <span>🇬🇧 런던 사례</span>
+                            <span class="text-slate-600">|</span>
+                            <span>방공호 ➔ 채소농장</span>
+                        </div>
+                    </div>
+
+                    <!-- Module 2 -->
+                    <div class="bg-slate-800/90 border border-blue-500/50 p-6 rounded-xl hover:bg-slate-800 transition-all group">
+                        <div class="flex justify-between mb-4">
+                            <span class="text-3xl group-hover:scale-110 transition-transform">📦</span>
+                            <span class="text-xs bg-blue-900/50 text-blue-300 px-2 py-1 rounded">물류거점</span>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-2">도심 물류 (MFC)</h4>
+                        <div class="flex items-center gap-2 text-xs text-slate-400 mt-4 bg-slate-900 p-2 rounded">
+                            <span>🇬🇧 아마존 사례</span>
+                            <span class="text-slate-600">|</span>
+                            <span>주차장 ➔ 배송허브</span>
+                        </div>
+                    </div>
+
+                    <!-- Module 3 -->
+                    <div class="bg-slate-800/90 border border-purple-500/50 p-6 rounded-xl hover:bg-slate-800 transition-all group">
+                        <div class="flex justify-between mb-4">
+                            <span class="text-3xl group-hover:scale-110 transition-transform">🖥️</span>
+                            <span class="text-xs bg-purple-900/50 text-purple-300 px-2 py-1 rounded">안전시설</span>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-2">데이터센터 & 공원</h4>
+                        <div class="flex items-center gap-2 text-xs text-slate-400 mt-4 bg-slate-900 p-2 rounded">
+                            <span>🇸🇪 스웨덴 사례</span>
+                            <span class="text-slate-600">|</span>
+                            <span>벙커 ➔ 서버실</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 6. EXECUTION PLAN II (Visualized) -->
+        <section class="reveal-on-scroll">
+            <div class="mb-10 flex items-end gap-4">
+                <h2 class="text-3xl md:text-4xl font-black text-white">실행 대안 II</h2>
+                <span class="text-xl text-orange-500 font-bold mb-1">운영 혁신 (Operation)</span>
+            </div>
+
+            <div class="bg-slate-800 p-10 rounded-3xl border border-slate-700 shadow-xl">
+                <h3 class="text-xl font-bold text-white mb-8 flex items-center">
+                    <span class="bg-orange-500 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">!</span>
+                    좀비 테넌트(Zombie Tenant) 퇴출 프로세스
+                </h3>
+                
+                <div class="flex flex-col md:flex-row w-full text-white">
+                    <!-- Step 1 Arrow -->
+                    <div class="arrow-box flex-1 border-l-4 border-orange-400">
+                        <div class="text-xs text-orange-400 font-bold uppercase mb-1">Step 01</div>
+                        <h4 class="text-lg font-bold mb-2">감지 (Detect)</h4>
+                        <p class="text-sm text-slate-400">매출 연동 임대료 도입.<br>POS 데이터로 '무늬만 가게' 즉시 식별.</p>
+                    </div>
+
+                    <!-- Step 2 Arrow -->
+                    <div class="arrow-box flex-1 border-l-4 border-orange-500">
+                        <div class="text-xs text-orange-500 font-bold uppercase mb-1">Step 02</div>
+                        <h4 class="text-lg font-bold mb-2">집행 (Enforce)</h4>
+                        <p class="text-sm text-slate-400">지속 영업 조항 적용.<br>10~20시 의무 영업 강제.</p>
+                    </div>
+
+                    <!-- Step 3 Arrow -->
+                    <div class="arrow-box flex-1 border-l-4 border-red-500" style="margin-right: 0; clip-path: none;">
+                        <div class="text-xs text-red-500 font-bold uppercase mb-1">Step 03</div>
+                        <h4 class="text-lg font-bold mb-2">교체 (Replace)</h4>
+                        <p class="text-sm text-slate-400">화이트 박스(White Box) 전략.<br>즉시 철거 후 팝업 유치.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 7. EXECUTION PLAN III (Corrected & Visualized) -->
+        <section class="reveal-on-scroll">
+            <div class="mb-10 flex flex-col md:flex-row md:items-end gap-4">
+                <h2 class="text-3xl md:text-4xl font-black text-white">실행 대안 III</h2>
+                <span class="text-xl text-indigo-500 font-bold mb-1">상생 연착륙 (Governance)</span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- AMC Diagram (Fixed Structure) -->
+                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700">
+                    <h3 class="text-2xl font-bold text-white mb-6">🏢 AMC (지역경영회사) 운영 구조</h3>
+                    
+                    <div class="flex flex-col items-center space-y-1">
+                        <!-- Tier 1: Seoul City -->
+                        <div class="w-2/3 bg-slate-700 text-center py-3 rounded-t-xl border-b-2 border-slate-600 relative">
+                            <span class="text-slate-300 text-xs uppercase font-bold tracking-wider">Asset Owner</span>
+                            <div class="text-white font-bold">서울시 / 시설공단</div>
+                        </div>
+                        
+                        <!-- Connection Arrow -->
+                        <div class="h-8 w-0.5 bg-slate-600"></div>
+                        <div class="bg-slate-900 px-3 py-1 rounded text-xs text-indigo-400 border border-indigo-500/50 -my-3 z-10">
+                            Master Lease (통임대)
+                        </div>
+                        <div class="h-8 w-0.5 bg-slate-600"></div>
+
+                        <!-- Tier 2: AMC -->
+                        <div class="w-full bg-indigo-600/90 text-center py-6 rounded-xl shadow-lg border border-indigo-400 relative z-20">
+                            <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-500 text-white text-[10px] px-2 rounded-full">Management Subject</div>
+                            <div class="text-xl font-black text-white mb-1">AMC (지역경영회사)</div>
+                            <div class="text-indigo-100 text-sm">통합 브랜딩 • 시설 투자 • MD 기획</div>
+                        </div>
+
+                        <!-- Connection Arrow -->
+                        <div class="h-8 w-0.5 bg-slate-600"></div>
+                        <div class="bg-slate-900 px-3 py-1 rounded text-xs text-indigo-400 border border-indigo-500/50 -my-3 z-10">
+                            Sub-lease (전대/재계약)
+                        </div>
+                        <div class="h-8 w-0.5 bg-slate-600"></div>
+
+                        <!-- Tier 3: Tenants -->
+                        <div class="w-full grid grid-cols-2 gap-2">
+                            <div class="bg-slate-900 border border-slate-600 p-3 rounded-lg text-center">
+                                <div class="text-white font-bold text-sm">기존 상인</div>
+                                <div class="text-[10px] text-slate-400">가이드라인 준수</div>
+                            </div>
+                            <div class="bg-slate-900 border border-slate-600 p-3 rounded-lg text-center">
+                                <div class="text-white font-bold text-sm">신규 팝업</div>
+                                <div class="text-[10px] text-slate-400">트렌드 콘텐츠</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-6">
+                        <a href="https://www.belocal.kr/news/articleList.html?sc_sub_section_code=S2N95&sc_section_code=S1N8&view_type=sm" target="_blank" class="inline-block text-xs bg-indigo-600 px-4 py-2 rounded-full text-white hover:bg-indigo-500 transition-colors shadow-lg">📚 비로컬 '로컬 권리' 기사 보기</a>
+                    </div>
+                </div>
+
+                <!-- CIT Diagram (Fixed Flow) -->
+                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700">
+                    <h3 class="text-2xl font-bold text-white mb-6">🤝 CIT (상생 지분 전환) 모델</h3>
+                    
+                    <div class="relative space-y-6">
+                        <!-- Step 1 -->
+                        <div class="flex items-center relative z-10">
+                            <div class="w-16 h-16 bg-red-900/30 border-2 border-red-500 rounded-full flex flex-col items-center justify-center shrink-0">
+                                <span class="text-xl">💰</span>
+                                <span class="text-[10px] text-red-300 font-bold">매몰비용</span>
+                            </div>
+                            <div class="flex-1 ml-4 bg-slate-900 p-3 rounded-lg border-l-4 border-red-500">
+                                <div class="text-white font-bold text-sm">자산 가치 평가</div>
+                                <div class="text-slate-400 text-xs">상인의 권리금 및 시설투자비를 공식 자산으로 인정</div>
+                            </div>
+                        </div>
+
+                        <!-- Arrow Down -->
+                        <div class="absolute left-8 top-12 bottom-12 w-0.5 bg-gradient-to-b from-red-500 via-indigo-500 to-emerald-500 -z-0"></div>
+
+                        <!-- Step 2 -->
+                        <div class="flex items-center relative z-10">
+                            <div class="w-16 h-16 bg-indigo-900/30 border-2 border-indigo-500 rounded-full flex flex-col items-center justify-center shrink-0">
+                                <span class="text-xl">🔄</span>
+                                <span class="text-[10px] text-indigo-300 font-bold">전환</span>
+                            </div>
+                            <div class="flex-1 ml-4 bg-slate-900 p-3 rounded-lg border-l-4 border-indigo-500">
+                                <div class="text-white font-bold text-sm">AMC 주식(지분) 교환</div>
+                                <div class="text-slate-400 text-xs">현금 보상 대신 경영 회사의 <strong>우선주(Preferred Stock)</strong> 지급</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="flex items-center relative z-10">
+                            <div class="w-16 h-16 bg-emerald-900/30 border-2 border-emerald-500 rounded-full flex flex-col items-center justify-center shrink-0">
+                                <span class="text-xl">📈</span>
+                                <span class="text-[10px] text-emerald-300 font-bold">배당</span>
+                            </div>
+                            <div class="flex-1 ml-4 bg-slate-900 p-3 rounded-lg border-l-4 border-emerald-500">
+                                <div class="text-white font-bold text-sm">안정적 수익 확보</div>
+                                <div class="text-slate-400 text-xs">직접 장사하지 않아도 배당 수익 발생 → <strong>자연스러운 퇴로 마련</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 8. CONCLUSION: VISION 2036 -->
+        <section class="reveal-on-scroll">
+            <div class="text-center mb-12">
+                <span class="text-cyan-400 font-bold tracking-widest text-sm uppercase border border-cyan-500 rounded-full px-4 py-1">Final Conclusion</span>
+                <h2 class="text-4xl md:text-6xl font-black text-white mt-4 mb-2">VISION 2036</h2>
+                <p class="text-xl text-slate-400">권역별 서울 지하도상가 미래상</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="group bg-slate-800 hover:bg-slate-700 p-8 rounded-3xl transition-all duration-300 border-t-8 border-blue-500 shadow-2xl hover:-translate-y-2">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🛡️</div>
+                    <h3 class="text-2xl font-bold text-white mb-2">강남 / 영등포</h3>
+                    <p class="text-blue-400 text-xs font-bold uppercase tracking-widest mb-6 border-b border-slate-600 pb-4">기후 쉘터 & 방재 거점</p>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        저지대 상권을 <strong>가변형 방재 시설(Kaem Ling)</strong>로 전환. 폭우 시 빗물을 막고, 폭염 시 시민을 보호.
+                    </p>
+                </div>
+                <div class="group bg-slate-800 hover:bg-slate-700 p-8 rounded-3xl transition-all duration-300 border-t-8 border-purple-500 shadow-2xl hover:-translate-y-2">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🎨</div>
+                    <h3 class="text-2xl font-bold text-white mb-2">도심권 (을지로)</h3>
+                    <p class="text-purple-400 text-xs font-bold uppercase tracking-widest mb-6 border-b border-slate-600 pb-4">보행 문화 & 로컬</p>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        지상 힙지로와 연결된 <strong>지하 보행 문화 거리</strong>. 청년 로컬 크리에이터들의 창업 스튜디오.
+                    </p>
+                </div>
+                <div class="group bg-slate-800 hover:bg-slate-700 p-8 rounded-3xl transition-all duration-300 border-t-8 border-emerald-500 shadow-2xl hover:-translate-y-2">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🌱</div>
+                    <h3 class="text-2xl font-bold text-white mb-2">외곽 권역</h3>
+                    <p class="text-emerald-400 text-xs font-bold uppercase tracking-widest mb-6 border-b border-slate-600 pb-4">생산 & 혁신 기지</p>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        안정적 지하 환경을 활용한 <strong>스마트팜(Metro Farm)</strong>, <strong>물류 센터(MFC)</strong>, <strong>데이터 센터</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-16 text-center">
+                <p class="text-2xl md:text-3xl text-white font-light">
+                    "단순한 통로(Passage)에서<br>
+                    <span class="font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">시민이 머무는 장소(Place)</span>로"
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-16 text-center text-slate-500 text-sm">
+        <p class="mb-2 text-white font-bold">2026 서울 지하도상가 대전환 마스터플랜 (Visualized Edition)</p>
+        <p>기획/발제: 비로컬 김혁주 대표</p>
+        <p>참고 문헌: 서울연구원(2024), IPCC AR6, 비로컬 기획기사</p>
+        <p class="mt-8 text-xs text-slate-600">© 2026 Designed for Urban Resilience.</p>
+    </footer>
+
+    <!-- AI Chat Widget -->
+    <button id="aiToggleBtn" class="fixed bottom-8 right-8 bg-cyan-600 hover:bg-cyan-500 text-white p-4 rounded-full shadow-2xl z-50 transition-all hover:scale-110 flex items-center justify-center">
+        <span class="text-2xl">🤖</span>
+    </button>
+    <div id="aiChatWidget" class="ai-chat-widget">
+        <div class="bg-slate-900 p-4 border-b border-slate-700 flex justify-between items-center">
+            <span class="font-bold text-cyan-400">✨ 서울 지하 AI 자문관</span>
+            <button id="aiCloseBtn" class="text-slate-400">✕</button>
+        </div>
+        <div id="aiChatBody" class="flex-1 p-4 overflow-y-auto bg-slate-800">
+            <div class="chat-bubble ai">
+                안녕하세요! <strong>2026년 초고령사회 진입</strong>에 따른 상권 변화가 궁금하신가요?
+            </div>
+        </div>
+        <div class="p-4 bg-slate-900 border-t border-slate-700 flex gap-2">
+            <input type="text" id="aiUserInput" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-sm text-white" placeholder="질문 입력...">
+            <button id="aiSendBtn" class="bg-cyan-600 text-white px-4 py-2 rounded-lg text-sm font-bold">전송</button>
+        </div>
+    </div>
+
+    <script>
+        // Scroll Reveal
+        const observer = new IntersectionObserver(entries => entries.forEach(e => e.isIntersecting && e.target.classList.add('is-visible')), { threshold: 0.1 });
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+
+        // Chart.js
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = "'Noto Sans KR'";
+
+        new Chart(document.getElementById('climateChart'), {
+            type: 'line',
+            data: {
+                labels: ['2024', '2026', '2028', '2030', '2032', '2034', '2036'],
+                datasets: [{ label: '집중호우 빈도', data: [100, 120, 150, 190, 240, 280, 320], borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.1)', fill: true, tension: 0.4 }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, scales: { y: { display: false }, x: { grid: { color: '#334155' } } } }
+        });
+
+        // DEMOGRAPHIC TREND CHART WITH 2026 MARKER
+        new Chart(document.getElementById('trendChart'), {
+            type: 'line',
+            data: {
+                labels: ['2022', '2024', '2026', '2028', '2030', '2032', '2036'],
+                datasets: [
+                    { label: '패션 소비 (1020세대)', data: [100, 90, 75, 60, 50, 40, 30], borderColor: '#ef4444', tension: 0.4, borderWidth: 3 },
+                    { label: '헬스케어 (60대+)', data: [30, 45, 75, 90, 110, 130, 150], borderColor: '#10b981', tension: 0.4, borderWidth: 3 }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { display: false }, x: { grid: { color: '#334155' } } },
+                plugins: {
+                    annotation: {
+                        annotations: {
+                            line1: {
+                                type: 'line',
+                                xMin: 2, xMax: 2, // Index of '2026'
+                                borderColor: 'rgba(255, 255, 255, 0.5)',
+                                borderWidth: 2,
+                                borderDash: [5, 5],
+                                label: {
+                                    display: true,
+                                    content: '2026 초고령사회 진입 (20%)',
+                                    position: 'start',
+                                    color: 'white',
+                                    backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                                    font: { size: 10, weight: 'bold' }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // AI Chat
+        const [aiToggleBtn, aiCloseBtn, aiChatWidget, aiSendBtn, aiUserInput, aiChatBody] = 
+            ['aiToggleBtn', 'aiCloseBtn', 'aiChatWidget', 'aiSendBtn', 'aiUserInput', 'aiChatBody'].map(id => document.getElementById(id));
+        
+        aiToggleBtn.onclick = () => { aiChatWidget.style.display = 'flex'; aiToggleBtn.style.display = 'none'; };
+        aiCloseBtn.onclick = () => { aiChatWidget.style.display = 'none'; aiToggleBtn.style.display = 'flex'; };
+
+        const apiKey = ""; 
+        const contextText = `[보고서 요약] 1.서론: 3중고. 2.현황: 25개소 팩트체크. 3.전망: 2026년 초고령사회 진입(인구절벽). 4.전략: 쿨링쉘터/윈터시티. 5.실행: 스마트팜/좀비테넌트 해결. 6.상생: AMC/CIT. 7.결론: Vision 2036.`;
+
+        async function callGemini(q) {
+            try {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ contents: [{parts: [{text: q}]}], systemInstruction: {parts: [{text: `AI 자문관입니다. 다음 내용을 바탕으로 답변하세요.\n${contextText}`}]} })
+                });
+                const data = await res.json();
+                return data.candidates[0].content.parts[0].text;
+            } catch(e) { return "오류가 발생했습니다."; }
+        }
+
+        async function sendMsg() {
+            const txt = aiUserInput.value.trim();
+            if(!txt) return;
+            const d1 = document.createElement('div'); d1.className='chat-bubble user'; d1.textContent=txt; aiChatBody.appendChild(d1);
+            aiUserInput.value = '';
+            const res = await callGemini(txt);
+            const d2 = document.createElement('div'); d2.className='chat-bubble ai'; d2.innerHTML=marked.parse(res); aiChatBody.appendChild(d2);
+            aiChatBody.scrollTop = aiChatBody.scrollHeight;
+        }
+
+        aiSendBtn.onclick = sendMsg;
+        aiUserInput.onkeypress = e => e.key === 'Enter' && sendMsg();
+    </script>
+</body>
 </html>
