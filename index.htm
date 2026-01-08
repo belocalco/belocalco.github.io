@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 서울 지하도상가 대전환: Masterplan Final (Corrected)</title>
+    <title>2026 서울 지하도상가 대전환: Masterplan Final (v3)</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js Annotation Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -188,7 +190,7 @@
         .flag-sg { background: linear-gradient(to bottom, #ef4444 50%, white 50%); }
         .flag-th { background: linear-gradient(to bottom, #ef4444 16%, white 16%, white 33%, #1d4ed8 33%, #1d4ed8 66%, white 66%, white 83%, #ef4444 83%); }
         .flag-ca { background: linear-gradient(to right, #ef4444 25%, white 25%, white 75%, #ef4444 75%); }
-        .flag-se { background: #006aa7; border-bottom: 4px solid #fecc00; border-left: 4px solid #fecc00; } /* Simplified */
+        .flag-se { background: #006aa7; border-bottom: 4px solid #fecc00; border-left: 4px solid #fecc00; }
     </style>
 </head>
 <body class="antialiased selection:bg-cyan-500 selection:text-white pb-32">
@@ -290,11 +292,11 @@
 
         <div class="section-divider"></div>
 
-        <!-- 3. FUTURE OUTLOOK GRAPH -->
+        <!-- 3. FUTURE OUTLOOK GRAPH: 2026 TIPPING POINT -->
         <section class="reveal-on-scroll">
             <div class="mb-10 text-center">
-                <h2 class="text-3xl md:text-5xl font-black text-white mb-4">2026-2036 미래 전망</h2>
-                <p class="text-slate-400">골든타임: 향후 10년의 기후 및 인구 변화 시나리오</p>
+                <h2 class="text-3xl md:text-5xl font-black text-white mb-4">2026: 인구 구조의 '티핑 포인트'</h2>
+                <p class="text-slate-400 text-lg">"서울, 초고령사회(Super-Aged Society) 진입의 원년"</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -307,13 +309,22 @@
                     <p class="text-xs text-slate-500 mt-4 text-center">* 과거 100년 빈도 폭우가 10년 단위로 단축됨을 시각화</p>
                 </div>
 
-                <!-- Demographic Graph -->
-                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
-                    <h3 class="text-lg font-bold text-purple-400 mb-4">📉 소비 절벽: 패션 vs 시니어 헬스케어</h3>
+                <!-- Demographic Graph (ENHANCED) -->
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 relative overflow-hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold text-purple-400">📉 소비 절벽: 2026 골든크로스</h3>
+                        <span class="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded animate-pulse">2026 WARNING</span>
+                    </div>
                     <div class="chart-container">
                         <canvas id="trendChart"></canvas>
                     </div>
-                    <p class="text-xs text-slate-500 mt-4 text-center">* 기존 의류 소비층(2030) 감소와 시니어(6070) 유입 증가 교차점</p>
+                    <div class="mt-4 bg-slate-900 p-4 rounded-xl border-l-4 border-purple-500">
+                        <h4 class="text-white font-bold text-sm mb-1">💡 Insight: 2026년의 의미</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            서울시 65세 이상 인구가 20%를 돌파하며 <strong>초고령사회</strong>에 진입합니다.
+                            지하도상가 주 고객이었던 1020세대는 급감하고, 병원/약국을 찾는 시니어 유동인구가 폭증하는 <strong>소비 주축의 영구적 이동</strong>이 시작됩니다.
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -682,7 +693,7 @@
         </div>
         <div id="aiChatBody" class="flex-1 p-4 overflow-y-auto bg-slate-800">
             <div class="chat-bubble ai">
-                안녕하세요! <strong>2026 서울 지하도상가 대전환 마스터플랜</strong>의 모든 내용을 숙지하고 있습니다. 무엇이든 물어보세요.
+                안녕하세요! <strong>2026년 초고령사회 진입</strong>에 따른 상권 변화가 궁금하신가요?
             </div>
         </div>
         <div class="p-4 bg-slate-900 border-t border-slate-700 flex gap-2">
@@ -709,16 +720,42 @@
             options: { responsive: true, maintainAspectRatio: false, scales: { y: { display: false }, x: { grid: { color: '#334155' } } } }
         });
 
+        // DEMOGRAPHIC TREND CHART WITH 2026 MARKER
         new Chart(document.getElementById('trendChart'), {
             type: 'line',
             data: {
-                labels: ['2024', '2026', '2028', '2030', '2032', '2034', '2036'],
+                labels: ['2022', '2024', '2026', '2028', '2030', '2032', '2036'],
                 datasets: [
-                    { label: '전통 의류 소비', data: [90, 80, 70, 60, 50, 45, 40], borderColor: '#ef4444', tension: 0.4 },
-                    { label: '헬스케어 수요', data: [40, 55, 70, 85, 100, 115, 130], borderColor: '#10b981', tension: 0.4 }
+                    { label: '패션 소비 (1020세대)', data: [100, 90, 75, 60, 50, 40, 30], borderColor: '#ef4444', tension: 0.4, borderWidth: 3 },
+                    { label: '헬스케어 (60대+)', data: [30, 45, 75, 90, 110, 130, 150], borderColor: '#10b981', tension: 0.4, borderWidth: 3 }
                 ]
             },
-            options: { responsive: true, maintainAspectRatio: false, scales: { y: { display: false }, x: { grid: { color: '#334155' } } } }
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { display: false }, x: { grid: { color: '#334155' } } },
+                plugins: {
+                    annotation: {
+                        annotations: {
+                            line1: {
+                                type: 'line',
+                                xMin: 2, xMax: 2, // Index of '2026'
+                                borderColor: 'rgba(255, 255, 255, 0.5)',
+                                borderWidth: 2,
+                                borderDash: [5, 5],
+                                label: {
+                                    display: true,
+                                    content: '2026 초고령사회 진입 (20%)',
+                                    position: 'start',
+                                    color: 'white',
+                                    backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                                    font: { size: 10, weight: 'bold' }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         });
 
         // AI Chat
@@ -729,7 +766,7 @@
         aiCloseBtn.onclick = () => { aiChatWidget.style.display = 'none'; aiToggleBtn.style.display = 'flex'; };
 
         const apiKey = ""; 
-        const contextText = `[보고서 요약] 1.서론: 3중고. 2.현황: 25개소 팩트체크. 3.전망: 기후위기/인구절벽. 4.전략: 쿨링쉘터(싱가포르)/윈터시티(몬트리올). 5.실행: 스마트팜(런던)/좀비테넌트 해결. 6.상생: AMC/CIT(포틀랜드). 7.결론: Vision 2036.`;
+        const contextText = `[보고서 요약] 1.서론: 3중고. 2.현황: 25개소 팩트체크. 3.전망: 2026년 초고령사회 진입(인구절벽). 4.전략: 쿨링쉘터/윈터시티. 5.실행: 스마트팜/좀비테넌트 해결. 6.상생: AMC/CIT. 7.결론: Vision 2036.`;
 
         async function callGemini(q) {
             try {
