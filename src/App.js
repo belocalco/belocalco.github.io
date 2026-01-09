@@ -6,7 +6,7 @@ import {
   Target, Compass, ChevronRight, ExternalLink, Printer, Info, CheckCircle2, 
   Maximize, Cpu, RefreshCcw, Tornado, Skull, XCircle, Sprout, 
   GitMerge, Ban, Footprints, Store, PartyPopper, Landmark, Magnet, MapPin, 
-  Lightbulb, Briefcase, GraduationCap, Factory, Utensils, ShoppingBag, LayoutGrid
+  Lightbulb, Briefcase, GraduationCap, Factory, Utensils, ShoppingBag, LayoutGrid, Smartphone
 } from 'lucide-react';
 
 // ==================================================================================
@@ -16,13 +16,13 @@ import {
 const STYLE = {
   // 레이아웃 & 간격
   LAYOUT: {
-    CONTAINER: "max-w-7xl mx-auto px-4 md:px-8", // 폭을 좀 더 넓게 (Bento Grid에 유리)
+    CONTAINER: "max-w-7xl mx-auto px-4 md:px-8", 
     SECTION_GAP: "mb-32 md:mb-40",
     CARD_ROUND: "rounded-[2rem] md:rounded-[3rem]",
     GRID_GAP: "gap-6 md:gap-8",
   },
   
-  // 텍스트 타이포그래피 (가독성 강화)
+  // 텍스트 타이포그래피
   TEXT: {
     TITLE_MAIN: "text-5xl md:text-6xl lg:text-8xl font-black tracking-tighter leading-[0.9] drop-shadow-sm break-keep",
     TITLE_SECTION: "text-3xl md:text-5xl font-black tracking-tight break-keep",
@@ -30,7 +30,7 @@ const STYLE = {
     BADGE: "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider border shadow-sm",
   },
 
-  // 색상 팔레트 (Eco-Futurism 테마)
+  // 색상 팔레트
   COLORS: {
     bg: "bg-slate-50",
     textMain: "text-slate-900",
@@ -40,7 +40,7 @@ const STYLE = {
     accent: "rose",
   },
 
-  // 컴포넌트 스타일 (Bento Grid 최적화)
+  // 컴포넌트 스타일
   COMPONENTS: {
     BENTO_CARD: "bg-white border border-slate-100 shadow-xl relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1",
     ICON_BOX: "w-14 h-14 rounded-2xl flex items-center justify-center shadow-inner",
@@ -48,8 +48,75 @@ const STYLE = {
   }
 };
 
+// [Helper] Tailwind 동적 클래스 매핑
+const COLOR_VARIANTS = {
+  cyan: {
+    bg50: 'bg-cyan-50',
+    text600: 'text-cyan-600',
+    border100: 'border-cyan-100',
+    text900: 'text-cyan-900',
+    text500: 'text-cyan-500',
+    bg100: 'bg-cyan-100',
+    text700: 'text-cyan-700',
+  },
+  emerald: {
+    bg50: 'bg-emerald-50',
+    text600: 'text-emerald-600',
+    border100: 'border-emerald-100',
+    text900: 'text-emerald-900',
+    text500: 'text-emerald-500',
+    bg100: 'bg-emerald-100',
+    text700: 'text-emerald-700',
+    bg50020: 'bg-emerald-500/20',
+    text400: 'text-emerald-400',
+  },
+  rose: {
+    bg50: 'bg-rose-50',
+    text500: 'text-rose-500',
+    border100: 'border-rose-100',
+    text900: 'text-rose-900',
+    text600: 'text-rose-600',
+  },
+  amber: {
+    bg50: 'bg-amber-50',
+    text600: 'text-amber-600',
+    border100: 'border-amber-100',
+    text900: 'text-amber-900',
+    text500: 'text-amber-500',
+    bg100: 'bg-amber-100',
+    text700: 'text-amber-700',
+  },
+  blue: {
+    bg50: 'bg-blue-50',
+    text600: 'text-blue-600',
+    border100: 'border-blue-100',
+    text900: 'text-blue-900',
+    text500: 'text-blue-500',
+    bg100: 'bg-blue-100',
+    text700: 'text-blue-700',
+  },
+  indigo: {
+    bg50: 'bg-indigo-50',
+    text600: 'text-indigo-600',
+    border100: 'border-indigo-100',
+    text900: 'text-indigo-900',
+    text500: 'text-indigo-500',
+    bg100: 'bg-indigo-100',
+    text700: 'text-indigo-700',
+  },
+   teal: {
+    bg50: 'bg-teal-50',
+    text600: 'text-teal-600',
+    border100: 'border-teal-100',
+    text900: 'text-teal-900',
+    text500: 'text-teal-500',
+    bg100: 'bg-teal-100',
+    text700: 'text-teal-700',
+  }
+};
+
 // ==================================================================================
-// [DATA LAYER] 콘텐츠 데이터 (텍스트 및 설정 - 수정 없음)
+// [DATA LAYER] 콘텐츠 데이터
 // ==================================================================================
 
 const HEADER_DATA = {
@@ -80,7 +147,7 @@ const HEADER_DATA = {
   outcome: {
     label: "Core Outcome",
     text: (
-      <>자생적 성장이 가능한<br/><span className="text-emerald-500">가치 순환 생태계</span></>
+      <>자생적 성장이<br className="block" /><span className="text-emerald-500">가능한 가치 순환 생태계</span></>
     )
   }
 };
@@ -219,56 +286,79 @@ const GLOBAL_CASES_DATA = [
   { 
     title: 'HighTechXL', sub: '(네덜란드)', tag: 'Deep Tech Builder', 
     desc: 'CERN, Philips 등의 기술을 활용해 하드웨어 스타트업을 직접 빌딩하는 벤처 스튜디오 모델.',
-    hash: ['#DeepTech', '#Hardware'], color: 'blue',
+    hash: ['#DeepTech', '#Hardware'], color: 'cyan',
     icon: <Rocket size={20} />, bgIcon: <Rocket size={100} />
   },
   { 
     title: 'Alphabet X', sub: '(미국)', tag: 'Moonshot Factory', 
     desc: '구글의 사내 벤처 스튜디오로, 기후 변화 등 인류 거대 문제를 해결하는 파괴적 혁신 실험.',
-    hash: ['#Innovation', '#Impact'], color: 'amber',
+    hash: ['#Innovation', '#Impact'], color: 'cyan',
     icon: <Cpu size={20} />, bgIcon: <Cpu size={100} />
   },
   { 
     title: 'Area Management', sub: '(일본)', tag: 'Urban Management', 
     desc: '마루노우치 등 민간 주도의 타운 매니지먼트. 부동산 소유주와 운영사가 협력해 지역 가치 상승.',
-    hash: ['#UrbanRegen', '#JapanModel'], color: 'indigo',
+    hash: ['#UrbanRegen', '#JapanModel'], color: 'emerald',
     icon: <MapPin size={20} />, bgIcon: <MapPin size={100} />
   },
   { 
     title: 'Station F', sub: '(프랑스)', tag: 'Mega Scale Hub', 
     desc: '철도 기지창을 개조해 만든 세계 최대 스타트업 캠퍼스. 공공의 인프라와 민간의 운영이 결합된 거점.',
-    hash: ['#Regeneration', '#ScaleUp'], color: 'blue',
+    hash: ['#Regeneration', '#ScaleUp'], color: 'amber',
     icon: <Building2 size={20} />, bgIcon: <Building2 size={100} />
   },
   { 
     title: 'Portland', sub: '(미국)', tag: 'Local Lifestyle', 
     desc: "'Keep Portland Weird' 슬로건 아래, 로컬 크리에이터와 소상공인 브랜드가 도시의 주류 문화를 형성.",
-    hash: ['#Craftsmanship', '#LocalBrand'], color: 'teal',
+    hash: ['#Craftsmanship', '#LocalBrand'], color: 'emerald',
     icon: <Store size={20} />, bgIcon: <Store size={100} />
   },
   { 
     title: 'King\'s Cross', sub: '(영국)', tag: 'Knowledge Quarter', 
     desc: '낙후된 지역을 구글 등 테크 기업, 예술 대학, 로컬 상권이 공존하는 지식 지구로 탈바꿈시킨 사례.',
-    hash: ['#Placemaking', '#TechArt'], color: 'indigo',
+    hash: ['#Placemaking', '#TechArt'], color: 'amber',
     icon: <Lightbulb size={20} />, bgIcon: <Lightbulb size={100} />
   }
 ];
 
 const BLUEPRINT_LAYERS_DATA = [
-  { icon: <Target size={28} />, color: 'emerald', layer: 'LAYER 01', title: '핵심 가치층 (Value Core)', desc: '가장 안쪽에 위치한 <strong>지역성(Locality)</strong>과 <strong>고유성(Identity)</strong>은 도시의 유전자입니다. 어떤 비즈니스도 지역의 정체성이라는 뿌리 없이는 자생력을 가질 수 없음을 상징합니다.' },
-  { icon: <Compass size={28} />, color: 'indigo', layer: 'LAYER 02', title: '공존 생태계층 (Jungle Loop)', desc: '<strong>코끼리, 얼룩말, 식생</strong>이 어우러지는 공생의 층입니다. 핵심 가치를 양분 삼아 각기 다른 규모의 주체들이 경쟁이 아닌 협력을 통해 생태계의 다양성을 유지합니다.' },
-  { icon: <Settings size={28} />, color: 'blue', layer: 'LAYER 03', title: '실행 인프라층 (Action Engine)', desc: '최외곽에서 생태계를 감싸는 <strong>VS(창조)</strong>와 <strong>AMC(수호)</strong> 엔진입니다. 투기 자본과 같은 외부 충격을 막아내고 시스템이 멈추지 않고 순환하도록 기동력을 공급합니다.' }
+  { 
+    icon: <Target size={28} />, 
+    color: 'emerald', 
+    layer: 'LAYER 01', 
+    title: '핵심 가치층 (Value Core)', 
+    desc: '모든 도시 생태계의 근원이자 출발점입니다. <strong>지역성(Locality)</strong>은 그 지역만의 고유한 지리적, 문화적 특성을 의미하며, <strong>고유성(Identity)</strong>은 이를 바탕으로 형성된 대체 불가능한 정체성을 뜻합니다. 이 핵심 가치가 단단히 뿌리내리지 않은 비즈니스는 지속 가능한 생명력을 가질 수 없으며, 모든 상위 레이어의 에너지를 공급하는 원천이 됩니다.' 
+  },
+  { 
+    icon: <Compass size={28} />, 
+    color: 'indigo', 
+    layer: 'LAYER 02', 
+    title: '공존 생태계층 (Jungle Loop)', 
+    desc: '핵심 가치를 기반으로 다양한 주체들이 상호작용하는 <strong>공존과 순환의 공간</strong>입니다. <strong>코끼리(앵커 기업)</strong>는 묵직한 하드웨어 인프라를 제공하고, <strong>얼룩말(로컬 벤처)</strong>은 창의적인 소프트웨어와 콘텐츠를 채우며, <strong>식생(소상공인/주민)</strong>은 생태계의 다양성과 활력을 유지합니다. 이들은 경쟁이 아닌 협력을 통해 서로의 성장을 견인하며 건강한 정글을 이룹니다.' 
+  },
+  { 
+    icon: <Settings size={28} />, 
+    color: 'blue', 
+    layer: 'LAYER 03', 
+    title: '실행 인프라층 (Action Engine)', 
+    desc: '생태계의 최외곽에서 시스템을 보호하고 가속화하는 <strong>실질적인 구동 엔진</strong>입니다. <strong>VS(벤처 스튜디오)</strong>는 끊임없이 새로운 비즈니스 씨앗을 심고 키워내는 "창조"의 역할을, <strong>AMC(지역경영회사)</strong>는 투기 자본과 젠트리피케이션과 같은 외부 위협으로부터 생태계를 지키는 "수호"의 역할을 수행합니다. 이 두 엔진이 맞물려 돌아갈 때, 도시는 멈추지 않는 자생적 성장을 지속합니다.' 
+  }
 ];
 
 // ==================================================================================
 // [SUB-COMPONENTS] 재사용 UI 컴포넌트
 // ==================================================================================
 
-const Badge = ({ icon, text, className = "", color = "slate" }) => (
-  <div className={`${STYLE.TEXT.BADGE} bg-${color}-50 border-${color}-100 text-${color}-600 ${className}`}>
-    {icon} {text}
-  </div>
-);
+const Badge = ({ icon, text, className = "", color = "slate" }) => {
+  // Use explicit color classes based on the prop to avoid dynamic class issues
+  const colorClass = COLOR_VARIANTS[color] || COLOR_VARIANTS.cyan; // default to cyan if not found
+  
+  return (
+    <div className={`${STYLE.TEXT.BADGE} ${colorClass.bg50} ${colorClass.border100} ${colorClass.text600} ${className}`}>
+      {icon} {text}
+    </div>
+  );
+};
 
 const SectionTitle = ({ children, align = "center", className = "" }) => (
   <h2 className={`${STYLE.TEXT.TITLE_SECTION} ${STYLE.COLORS.textMain} ${align === "center" ? "text-center" : "text-left"} mb-6 ${className}`}>
@@ -290,6 +380,12 @@ const App = () => {
       
       {/* 0. Top Navigation / Actions */}
       <div className={`${STYLE.LAYOUT.CONTAINER} pt-8 mb-16 flex flex-col sm:flex-row gap-4 justify-between items-center print:hidden`}>
+        {/* Mobile Landscape Alert */}
+        <div className="md:hidden w-full mb-4 bg-indigo-50 border border-indigo-100 p-3 rounded-xl flex items-center justify-center gap-3 animate-pulse">
+            <Smartphone className="text-indigo-500 rotate-90" size={20} />
+            <span className="text-xs font-bold text-indigo-700">가로 모드로 보시면 더 선명하게 보입니다.</span>
+        </div>
+
         <a 
           href="https://www.belocal.kr/news/articleList.html?sc_sub_section_code=S2N95&sc_section_code=S1N8&view_type=sm" 
           target="_blank" 
@@ -346,7 +442,8 @@ const App = () => {
                     {HEADER_DATA.cards.map((item, index) => (
                       <React.Fragment key={index}>
                         <div className="flex-1 text-center space-y-5 group w-full bg-slate-50/50 p-6 rounded-[2rem] border border-slate-100 hover:bg-white hover:shadow-xl transition-all duration-300">
-                            <div className={`w-20 h-20 bg-${item.color}-50 rounded-3xl mx-auto flex items-center justify-center text-${item.color}-600 border border-${item.color}-100 shadow-sm group-hover:scale-110 transition-transform duration-300`}>
+                            {/* [Fix] Using explicit color classes */}
+                            <div className={`w-20 h-20 ${COLOR_VARIANTS[item.color].bg50} rounded-3xl mx-auto flex items-center justify-center ${COLOR_VARIANTS[item.color].text600} ${COLOR_VARIANTS[item.color].border100} border shadow-sm group-hover:scale-110 transition-transform duration-300`}>
                                 {item.icon}
                             </div>
                             <div>
@@ -657,6 +754,7 @@ const App = () => {
           <div className="flex flex-col lg:flex-row items-center justify-around gap-20 relative z-10">
             {/* Wheel Visualization (Restored) */}
             <div className="relative w-[360px] h-[360px] shrink-0">
+                {/* [수정됨] 그라데이션 서클: 시계 방향 회전 (기존 코드 유지하되 그라데이션 색상 배치로 회전감 강화) */}
                 <div className="absolute inset-0 rounded-full animate-spin-slow opacity-80 blur-lg"
                      style={{
                          background: 'conic-gradient(from 0deg, #06b6d4 0deg, #10b981 120deg, #d97706 240deg, #06b6d4 360deg)',
@@ -664,13 +762,14 @@ const App = () => {
                 ></div>
                 
                 {/* Core */}
+                {/* [수정됨] RefreshCcw 아이콘 제거, 텍스트만 유지 */}
                 <div className="absolute inset-6 rounded-full bg-slate-900 flex flex-col items-center justify-center text-white shadow-2xl z-20 border-[6px] border-white">
-                    <RefreshCcw size={48} className="text-cyan-400 mb-3 animate-spin-slow"/>
                     <span className="font-black text-4xl italic tracking-tighter">TCJTC</span>
                     <span className="text-[10px] uppercase tracking-[0.4em] text-slate-400 mt-2">Flywheel Effect</span>
                 </div>
 
                 {/* Nodes (Floating) */}
+                {/* 1. Jobs (Top Center) */}
                 <div className="absolute -top-10 left-1/2 -translate-x-1/2 flex flex-col items-center z-30 group cursor-pointer hover:scale-110 transition-transform">
                     <div className="w-20 h-20 bg-cyan-600 rounded-3xl shadow-xl flex items-center justify-center text-white ring-4 ring-white border-2 border-cyan-100">
                         <Briefcase size={32} />
@@ -679,8 +778,10 @@ const App = () => {
                         <p className="font-bold text-slate-800 text-sm">일자리</p>
                         <p className="text-[10px] font-bold text-cyan-600 uppercase tracking-wider">Jobs</p>
                     </div>
+                     {/* [수정됨] 화살표 제거 */}
                 </div>
 
+                {/* 2. Traffic (Bottom Right) */}
                 <div className="absolute bottom-0 -right-10 flex flex-col items-center z-30 group cursor-pointer hover:scale-110 transition-transform">
                     <div className="w-20 h-20 bg-emerald-600 rounded-3xl shadow-xl flex items-center justify-center text-white ring-4 ring-white border-2 border-emerald-100">
                         <Footprints size={32} />
@@ -689,8 +790,10 @@ const App = () => {
                         <p className="font-bold text-slate-800 text-sm">관계인구</p>
                         <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider">Traffic</p>
                     </div>
+                     {/* [수정됨] 화살표 제거 */}
                 </div>
 
+                {/* 3. Capital (Bottom Left) */}
                 <div className="absolute bottom-0 -left-10 flex flex-col items-center z-30 group cursor-pointer hover:scale-110 transition-transform">
                     <div className="w-20 h-20 bg-amber-500 rounded-3xl shadow-xl flex items-center justify-center text-white ring-4 ring-white border-2 border-amber-100">
                         <Coins size={32} />
@@ -699,6 +802,7 @@ const App = () => {
                         <p className="font-bold text-slate-800 text-sm">자본</p>
                         <p className="text-[10px] font-bold text-amber-600 uppercase tracking-wider">Capital</p>
                     </div>
+                    {/* [수정됨] 화살표 제거 */}
                 </div>
             </div>
 
@@ -708,6 +812,7 @@ const App = () => {
                   <div className={`absolute top-0 left-0 w-2 h-full bg-${item.color}-500 rounded-l-[2rem]`}></div>
                   <h4 className={`font-black text-${item.color}-900 text-lg mb-2 flex items-center gap-3`}>
                       <span className={`text-${item.color}-500`}>0{item.id}.</span> {item.title} 
+                      {/* [수정됨] 꺽은 괄호 및 화살표 제거: 뱃지 스타일만 유지 */}
                       <span className={`text-[10px] bg-${item.color}-50 text-${item.color}-700 px-2 py-1 rounded font-bold ml-auto uppercase tracking-wide`}>{item.engTitle}</span>
                   </h4>
                   <p className={`text-xs font-bold text-${item.color}-600 mb-3 pl-1`}>{item.quote}</p>
@@ -718,33 +823,6 @@ const App = () => {
               ))}
             </div>
           </div>
-        </section>
-
-        {/* 4.5 Ripple Effects (Bento Grid) */}
-        <section className={`${STYLE.LAYOUT.CONTAINER} mb-24 relative`}>
-            <div className="absolute left-1/2 -top-12 h-12 w-0.5 bg-gradient-to-b from-slate-200 to-indigo-200 hidden md:block"></div>
-            
-            <div className="bg-gradient-to-br from-indigo-900 to-slate-900 rounded-[3rem] p-8 md:p-20 text-white shadow-2xl relative overflow-hidden ring-4 ring-indigo-500/20">
-                <div className="absolute top-0 right-0 p-12 opacity-10"><PartyPopper size={240} /></div>
-                
-                <div className="relative z-10 text-center mb-16">
-                    <span className="bg-white/10 text-indigo-200 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] border border-white/10 backdrop-blur-md">Outcome</span>
-                    <h3 className="text-3xl md:text-4xl font-black mt-6 mb-3 break-keep">TCJTC 엔진이 만드는 도시의 변화<br/><span className="text-lg font-medium text-indigo-300/80">Positive Ripple Effects</span></h3>
-                    <p className="text-slate-400 text-sm">"순환 메커니즘이 정상 작동할 때, 도시는 이렇게 살아납니다"</p>
-                </div>
-
-                <div className="grid md:grid-cols-3 gap-6 relative z-10">
-                    {RIPPLE_EFFECTS_DATA.map((effect, idx) => (
-                      <div key={idx} className="bg-white/5 border border-white/10 p-8 rounded-[2rem] backdrop-blur-md hover:bg-white/10 transition-colors group">
-                          <div className={`w-14 h-14 bg-${effect.color}-500/20 rounded-2xl flex items-center justify-center text-${effect.color}-400 mb-6 group-hover:scale-110 transition-transform`}>
-                              {effect.icon}
-                          </div>
-                          <h4 className="text-xl font-bold mb-3">{effect.title}<br/><span className="text-xs font-bold uppercase opacity-50 tracking-wider">{effect.sub}</span></h4>
-                          <p className="text-sm text-slate-300 leading-relaxed font-light break-keep" dangerouslySetInnerHTML={{ __html: effect.desc }} />
-                      </div>
-                    ))}
-                </div>
-            </div>
         </section>
 
         {/* 5. Partnership (VS & AMC) - Bento Style */}
@@ -784,13 +862,17 @@ const App = () => {
                 ))}
               </div>
               
-              {/* Tools Grid */}
+              {/* [수정됨] Tools Grid (Enhanced Visuals for Importance) */}
               <div className="pt-8 border-t border-slate-100">
+                  <h4 className="font-bold text-slate-700 mb-4 flex items-center gap-2 text-sm uppercase tracking-wider">
+                    <Settings size={16} className={`text-${PARTNERSHIP_DATA.vs.theme}-500`}/> 
+                    6 Strategic Tools
+                  </h4>
                   <div className="grid grid-cols-2 gap-3">
                     {PARTNERSHIP_DATA.vs.tools.map((tool, tIdx) => (
-                      <div key={tIdx} className="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex flex-col justify-center hover:bg-blue-50 transition-colors cursor-default">
-                        <p className={`text-xs font-bold text-${PARTNERSHIP_DATA.vs.theme}-700 mb-1`}>{tool.name}</p>
-                        <p className="text-[10px] text-slate-400 leading-tight break-keep font-medium">{tool.desc}</p>
+                      <div key={tIdx} className={`bg-slate-50 p-4 rounded-2xl border border-slate-100 flex flex-col justify-center hover:bg-${PARTNERSHIP_DATA.vs.theme}-50 hover:border-${PARTNERSHIP_DATA.vs.theme}-300 hover:shadow-md transition-all cursor-default group/tool`}>
+                        <p className={`text-xs font-black text-${PARTNERSHIP_DATA.vs.theme}-700 mb-1 group-hover/tool:text-${PARTNERSHIP_DATA.vs.theme}-900`}>{tool.name}</p>
+                        <p className="text-[10px] text-slate-400 leading-tight break-keep font-medium group-hover/tool:text-slate-600">{tool.desc}</p>
                       </div>
                     ))}
                   </div>
@@ -816,20 +898,24 @@ const App = () => {
                       {step.icon}
                     </div>
                     <div className="text-left mt-1.5">
-                      <h5 className={`font-bold ${STYLE.COLORS.textMain} text-base mb-1`}>{step.title}</h5>
+                      <h4 className={`font-bold ${STYLE.COLORS.textMain} text-base mb-1`}>{step.title}</h4>
                       <p className={`text-xs ${STYLE.COLORS.textSub} font-normal leading-relaxed break-keep`}>{step.text}</p>
                     </div>
                   </div>
                 ))}
               </div>
               
-              {/* Tools Grid */}
+              {/* Tools Grid (Enhanced Visuals for Importance) */}
               <div className="pt-8 border-t border-slate-100">
+                  <h4 className="font-bold text-slate-700 mb-4 flex items-center gap-2 text-sm uppercase tracking-wider">
+                    <Settings size={16} className={`text-${PARTNERSHIP_DATA.amc.theme}-500`}/> 
+                    6 Strategic Tools
+                  </h4>
                   <div className="grid grid-cols-2 gap-3">
                     {PARTNERSHIP_DATA.amc.tools.map((tool, tIdx) => (
-                      <div key={tIdx} className="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex flex-col justify-center hover:bg-indigo-50 transition-colors cursor-default">
-                        <p className={`text-xs font-bold text-${PARTNERSHIP_DATA.amc.theme}-700 mb-1`}>{tool.name}</p>
-                        <p className="text-[10px] text-slate-400 leading-tight break-keep font-medium">{tool.desc}</p>
+                      <div key={tIdx} className={`bg-slate-50 p-4 rounded-2xl border border-slate-100 flex flex-col justify-center hover:bg-${PARTNERSHIP_DATA.amc.theme}-50 hover:border-${PARTNERSHIP_DATA.amc.theme}-100 transition-all cursor-default group/tool`}>
+                        <p className={`text-xs font-black text-${PARTNERSHIP_DATA.amc.theme}-700 mb-1 group-hover/tool:text-${PARTNERSHIP_DATA.amc.theme}-900`}>{tool.name}</p>
+                        <p className="text-[10px] text-slate-400 leading-tight break-keep font-medium group-hover/tool:text-slate-600">{tool.desc}</p>
                       </div>
                     ))}
                   </div>
@@ -874,7 +960,8 @@ const App = () => {
           <div className="relative z-10 space-y-24">
             <div className="text-center space-y-6">
               <span className="text-indigo-600 font-black text-xs uppercase tracking-[0.6em] block underline underline-offset-8 decoration-indigo-200">Final Grand Synthesis</span>
-              <h2 className={`${STYLE.TEXT.TITLE_MAIN} italic ${STYLE.COLORS.textMain}`}>마스터 블루프린트:<br/>도시 통합 설계도</h2>
+              {/* [수정됨] 타이틀 텍스트 변경 */}
+              <h2 className={`${STYLE.TEXT.TITLE_MAIN} italic ${STYLE.COLORS.textMain}`}>마스터 블루프린트:<br/>건강한 지역 경제 생태계 설계도</h2>
               <p className={`${STYLE.COLORS.textSub} font-medium text-xl max-w-3xl mx-auto italic leading-relaxed break-keep`}>
                 좋은 기업이라는 씨앗이 어떻게 좋은 도시라는 숲을 이루는지 <br className="hidden md:block"/> 
                 전체 시스템의 인과 관계(Causality)를 한눈에 확인해 보세요.
@@ -946,19 +1033,26 @@ const App = () => {
                     <text x="360" y="520" className="text-[11px] font-bold fill-indigo-600 italic">가치 전이 Value Transfer</text>
                     
                     {/* AMC -> Good City Connection (Adjusted text position) */}
-                    <path d="M 700 300 Q 600 300, 500 300" fill="none" stroke="#10b981" strokeWidth="3" markerEnd="url(#arr-emerald)" />
-                    {/* Moved text up and slightly left to avoid overlapping with AMC Engine */}
-                    <text x="560" y="260" className="text-[11px] font-bold fill-emerald-600 italic">도시 활성화 Activation</text>
+                    {/* [수정됨] 곡률 조정: 시작점(670,300) -> 제어점(600,180) -> 끝점(480,270) */}
+                    {/* 시작점을 AMC 아이콘 아래로 */}
+                    {/* 제어점을 높여(180) 위로 완만하게 둥글게 휘게 함 */}
+                    {/* 끝점을 중앙 서클 테두리에 맞춤 */}
+                    <path d="M 680 300 Q 580 180, 520 280" fill="none" stroke="#10b981" strokeWidth="3" markerEnd="url(#arr-emerald)" />
+
+                    {/* [수정됨] 텍스트 위치 조정: 화살표 위쪽(y=190)으로 이동 및 좌측으로 이동(x=610) */}
+                    <text x="530" y="210" className="text-[11px] font-bold fill-emerald-600 italic">지역경제 활성화 Activation</text>
                   </svg>
                </div>
             </div>
 
-            {/* Layer Info */}
+            {/* Layer Info (Updated Description) */}
             <div className="bg-slate-900 rounded-[3rem] md:rounded-[4rem] p-10 md:p-20 text-left relative overflow-hidden shadow-2xl">
                 <div className="absolute top-0 right-0 w-[20rem] h-[20rem] bg-emerald-500/10 blur-[100px] rounded-full"></div>
                 <div className="relative z-10 space-y-16">
                     <div className="border-l-4 border-emerald-500 pl-8">
-                        <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tighter mb-4 italic break-keep">도시 통합 설계도의 작동 원리</h3>
+                        {/* [수정됨] 타이틀 텍스트 변경 */}
+                        <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tighter mb-4 italic break-keep">건강한 지역 경제 생태계 설계도</h3>
+                        {/* [수정됨] 설명 텍스트 렌더링 */}
                         <p className="text-slate-400 font-medium text-lg break-keep">설계도를 안쪽(뿌리)에서 바깥쪽(수호)으로 따라가며 시스템의 유기적 작동 방식을 이해해 보세요.</p>
                     </div>
 
@@ -970,6 +1064,7 @@ const App = () => {
                               </div>
                               <div>
                                   <h4 className="text-white font-bold text-xl leading-tight italic mb-3">{layer.layer}<br/><span className={`text-${layer.color}-400 not-italic`}>{layer.title}</span></h4>
+                                  {/* [수정됨] 설명 텍스트 렌더링 */}
                                   <p className="text-slate-400 text-sm leading-relaxed font-normal break-keep" dangerouslySetInnerHTML={{ __html: layer.desc }} />
                               </div>
                           </div>
